@@ -1,5 +1,7 @@
-export interface ISerialize {
-  loadSave(saveString: string): void;
+export interface ISerialize<T = unknown> {
+  loadSave: (save: T) => void;
 
-  getSave(): string;
+  generateSave: () => T;
+
+  getSaveStr: () => string;
 }

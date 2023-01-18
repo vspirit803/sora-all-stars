@@ -1,0 +1,156 @@
+{
+  "version": "0.0.1",
+  "startTime": "2023-01-01T00:00:00.000Z",
+  "characters": [
+    {
+      "name": "织田信长",
+      "properties": {
+        "ATK": {
+          "name": "ATK",
+          "value": 100
+        },
+        "DEF": {
+          "name": "DEF",
+          "value": 100
+        },
+        "HP": {
+          "name": "HP",
+          "value": 100
+        },
+        "MP": {
+          "name": "MP",
+          "value": 100
+        },
+        "SPD": {
+          "name": "SPD",
+          "value": 100
+        }
+      }
+    },
+    {
+      "name": "钟离",
+      "properties": {
+        "ATK": {
+          "name": "ATK",
+          "value": 100
+        },
+        "DEF": {
+          "name": "DEF",
+          "value": 100
+        },
+        "HP": {
+          "name": "HP",
+          "value": 100
+        },
+        "MP": {
+          "name": "MP",
+          "value": 100
+        },
+        "SPD": {
+          "name": "SPD",
+          "value": 100
+        }
+      }
+    },
+    {
+      "name": "雷电将军",
+      "properties": {
+        "ATK": {
+          "name": "ATK",
+          "value": 100
+        },
+        "DEF": {
+          "name": "DEF",
+          "value": 100
+        },
+        "HP": {
+          "name": "HP",
+          "value": 100
+        },
+        "MP": {
+          "name": "MP",
+          "value": 100
+        },
+        "SPD": {
+          "name": "SPD",
+          "value": 100
+        }
+      }
+    },
+    {
+      "name": "三上悠亚",
+      "properties": {
+        "ATK": {
+          "name": "ATK",
+          "value": 100
+        },
+        "DEF": {
+          "name": "DEF",
+          "value": 100
+        },
+        "HP": {
+          "name": "HP",
+          "value": 100
+        },
+        "MP": {
+          "name": "MP",
+          "value": 100
+        },
+        "SPD": {
+          "name": "SPD",
+          "value": 100
+        }
+      }
+    },
+    {
+      "name": "石川澪",
+      "properties": {
+        "ATK": {
+          "name": "ATK",
+          "value": 100
+        },
+        "DEF": {
+          "name": "DEF",
+          "value": 100
+        },
+        "HP": {
+          "name": "HP",
+          "value": 100
+        },
+        "MP": {
+          "name": "MP",
+          "value": 100
+        },
+        "SPD": {
+          "name": "SPD",
+          "value": 100
+        }
+      }
+    },
+    {
+      "name": "河北彩花",
+      "properties": {
+        "ATK": {
+          "name": "ATK",
+          "value": 100
+        },
+        "DEF": {
+          "name": "DEF",
+          "value": 100
+        },
+        "HP": {
+          "name": "HP",
+          "value": 100
+        },
+        "MP": {
+          "name": "MP",
+          "value": 100
+        },
+        "SPD": {
+          "name": "SPD",
+          "value": 100
+        }
+      }
+    }
+  ]
+}

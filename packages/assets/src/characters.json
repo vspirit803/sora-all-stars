@@ -1,0 +1,92 @@
+[
+  {
+    "name": "织田信长",
+    "properties": {
+      "ATK": 100,
+      "DEF": 100,
+      "HP": 100,
+      "MP": 100,
+      "SPD": 100
+    }
+  },
+  {
+    "name": "斧王",
+    "properties": {
+      "ATK": 150,
+      "DEF": 20,
+      "HP": 200,
+      "MP": 100,
+      "SPD": 80
+    }
+  },
+  {
+    "name": "敌法师",
+    "properties": {
+      "ATK": 120,
+      "DEF": 100,
+      "HP": 100,
+      "MP": 0,
+      "SPD": 150
+    }
+  },
+  {
+    "name": "钟离",
+    "properties": {
+      "ATK": 120,
+      "DEF": 100,
+      "HP": 100,
+      "MP": 0,
+      "SPD": 150
+    }
+  },
+  {
+    "name": "雷电将军",
+    "properties": {
+      "ATK": 120,
+      "DEF": 100,
+      "HP": 100,
+      "MP": 0,
+      "SPD": 150
+    }
+  },
+  {
+    "name": "御坂美琴",
+    "properties": {
+      "ATK": 120,
+      "DEF": 100,
+      "HP": 100,
+      "MP": 0,
+      "SPD": 150
+    }
+  },
+  {
+    "name": "三上悠亚",
+    "properties": {
+      "ATK": 120,
+      "DEF": 100,
+      "HP": 100,
+      "MP": 0,
+      "SPD": 150
+    }
+  },
+  {
+    "name": "石川澪",
+    "properties": {
+      "ATK": 200,
+      "DEF": 100,
+      "HP": 100,
+      "MP": 100,
+      "SPD": 100
+    }
+  },
+  {
+    "name": "河北彩花",
+    "properties": {
+      "ATK": 200,
+      "DEF": 100,
+      "HP": 100,
+      "MP": 100,
+      "SPD": 100
+    }
+  }
+]
