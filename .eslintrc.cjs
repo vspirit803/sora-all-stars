@@ -1,6 +1,7 @@
 module.exports = {
   extends: [
     "eslint:recommended",
+    "plugin:@typescript-eslint/recommended-requiring-type-checking",
     "plugin:@typescript-eslint/recommended",
     "plugin:import/typescript",
   ],
@@ -13,6 +14,7 @@ module.exports = {
       experimentalObjectRestSpread: true,
       modules: true,
     },
+    project: "./tsconfig.json",
   },
   env: {
     browser: true,
@@ -20,7 +22,6 @@ module.exports = {
     es6: true,
   },
   plugins: ["@typescript-eslint", "import", "simple-import-sort"],
-
   rules: {
     // import order rules
     "simple-import-sort/imports": "error",
@@ -30,17 +31,16 @@ module.exports = {
     "import/newline-after-import": "error",
     "import/no-duplicates": "error",
 
-
     "no-multi-spaces": ["error"],
     "array-bracket-spacing": ["error", "never"],
-    "spaced-comment": ["error", "always"],
+    "spaced-comment": ["error", "always", {
+      "line": {
+        "markers": ["/"],
+        "exceptions": ["-", "+"],
+      },
+    }],
 
-    "@typescript-eslint/method-signature-style": ["error", "property"],
-
-    "no-unused-vars": "off",
-    "@typescript-eslint/no-unused-vars": [2, { args: "none" }],
-    "no-dupe-class-members": "off",
-    "@typescript-eslint/no-dupe-class-members": "warn",
+    // TypeScript 规则覆盖 JavaScript 规则
     "space-before-blocks": "off",
     "@typescript-eslint/space-before-blocks": "error",
     "brace-style": "off",
@@ -53,8 +53,6 @@ module.exports = {
     ],
     "semi": "off",
     "@typescript-eslint/semi": ["error", "always"],
-    "no-redeclare": "off",
-    "@typescript-eslint/no-redeclare": "error",
     "lines-between-class-members": "off",
     "@typescript-eslint/lines-between-class-members": ["error", "always", { exceptAfterSingleLine: true }],
     "indent": "off",
@@ -71,16 +69,59 @@ module.exports = {
     "@typescript-eslint/space-before-function-paren": ["error", "never"],
     "padding-line-between-statements": "off",
     "@typescript-eslint/padding-line-between-statements":
-       "error",
+      "error",
     "object-curly-spacing": "off",
     "@typescript-eslint/object-curly-spacing": ["error", "always"],
     "func-call-spacing": "off",
     "@typescript-eslint/func-call-spacing": "error",
     "comma-dangle": "off",
-    "@typescript-eslint/comma-dangle": ["warn", "always-multiline"],
+    "@typescript-eslint/comma-dangle": ["error", "always-multiline"],
     "comma-spacing": "off",
     "@typescript-eslint/comma-spacing": "error",
     "space-infix-ops": "off",
     "@typescript-eslint/space-infix-ops": "error",
+    'no-throw-literal': 'off',
+    '@typescript-eslint/no-throw-literal': 'error',
+
+    // TypeScript 规则
+    // strict rules
+    "@typescript-eslint/prefer-nullish-coalescing": "error",
+    "@typescript-eslint/prefer-optional-chain": "error",
+    "@typescript-eslint/prefer-for-of": "error",
+    "@typescript-eslint/non-nullable-type-assertion-style": "error",
+    "@typescript-eslint/no-non-null-asserted-nullish-coalescing": "error",
+    "@typescript-eslint/prefer-reduce-type-parameter": "error",
+
+    // normal rules
+    "@typescript-eslint/consistent-type-imports": ["error", {
+      "fixStyle": "inline-type-imports"
+    }],
+    "@typescript-eslint/consistent-type-exports": "error",
+    "@typescript-eslint/promise-function-async": "error",
+    "@typescript-eslint/switch-exhaustiveness-check": "error",
+
+    "@typescript-eslint/array-type": ["error", { default: "array-simple" }],
+    "@typescript-eslint/naming-convention": [
+      "error",
+      {
+        "selector": "interface",
+        "format": ["PascalCase"],
+        "custom": {
+          "regex": "^I[A-Za-z]",
+          "match": true,
+        },
+      },
+    ],
+    "@typescript-eslint/method-signature-style": ["error", "property"],
+    "@typescript-eslint/no-empty-interface": ["error", {
+      "allowSingleExtends": true,
+    }],
+    "@typescript-eslint/no-inferrable-types": ["error", {
+      "ignoreParameters": true,
+      "ignoreProperties": true,
+    }],
+    "@typescript-eslint/restrict-template-expressions": ["error", {
+      "allowNumber": true,
+    }],
   },
 };

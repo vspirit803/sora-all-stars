@@ -1,6 +1,6 @@
-import { ISerialize } from "@core/base";
+import { type ISerialize } from "@core/base";
 
-import { PropertySave } from "./PropertySave";
+import { type PropertySave } from "./PropertySave";
 
 export class Property implements ISerialize<PropertySave> {
   name: PropertyName;

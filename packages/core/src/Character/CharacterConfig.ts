@@ -1,4 +1,4 @@
-import { PropertyName } from "@core/Property";
+import { type PropertyName } from "@core/Property";
 
 export interface CharacterConfig {
   name: string;

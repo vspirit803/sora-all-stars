@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Game } from "@sora-all-stars/core";
+import { Game} from "@sora-all-stars/core";
 
 import HelloWorld from "./components/HelloWorld.vue";
 
@@ -13,7 +13,7 @@ if (rawSave !== null) {
 }
 
 (window as unknown as Window & { game: Game }).game = game;
-console.log(game);
+console.log(game)
 
 save();
 
@@ -37,6 +37,10 @@ function save() {
   </div>
   <button type="button" @click="save">
     保存
+  </button>
+
+  <button type="button" @click="() => game.onBattleStart()">
+    战斗开始
   </button>
   <HelloWorld msg="Vite + Vue" />
 </template>

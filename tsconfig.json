@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "strict": true,
+    "allowJs": true,
     "module": "ESNext",
     "useDefineForClassFields": true,
     "experimentalDecorators": true,
@@ -10,10 +11,9 @@
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "paths": {
-      "@core/*": ["packages/core/src/*"],
-      "@assets/*": ["packages/assets/src/*"]
+      "@core/*": ["packages/core/src/*"]
     },
-    "isolatedModules": true,
+    // "isolatedModules": true,
     "lib": ["ESNext", "dom"],
     "target": "ESNext"
   }

@@ -1,4 +1,5 @@
 import { CharacterSave } from "@core/Character";
+import { ItemSave } from "@core/Item";
 import { Type } from "class-transformer";
 import {
   IsArray,
@@ -24,5 +25,12 @@ export class GameSave {
     each: true,
   })
   @Type(() => CharacterSave)
-  characters!: Array<CharacterSave>;
+  characters!: CharacterSave[];
+
+  @IsArray()
+  @ValidateNested({
+    each: true,
+  })
+  @Type(() => ItemSave)
+  items!: ItemSave[];
 }

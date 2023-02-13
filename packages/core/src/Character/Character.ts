@@ -1,8 +1,8 @@
-import { ISerialize } from "@core/base";
-import { Property, PropertyName } from "@core/Property";
+import { type ISerialize } from "@core/base";
+import { Property, type PropertyName } from "@core/Property";
 
-import { CharacterConfig } from "./CharacterConfig";
-import { CharacterSave } from "./CharacterSave";
+import { type CharacterConfig } from "./CharacterConfig";
+import { type CharacterSave } from "./CharacterSave";
 
 export class Character implements ISerialize<CharacterSave> {
   name: string;

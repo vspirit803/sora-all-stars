@@ -1,6 +1,6 @@
 import { IsNumber, IsString } from "class-validator";
 
-import { PropertyName } from "./Property";
+import { type PropertyName } from "./Property";
 
 export class PropertySave {
   @IsString()

@@ -152,5 +152,12 @@
         }
       }
     }
+  ],
+  "items": [
+    {
+      "type": "Material",
+      "name": "轩辕剑",
+      "description": "上古十神器之一"
+    }
   ]
 }

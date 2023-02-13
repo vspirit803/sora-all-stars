@@ -1,4 +1,5 @@
-import { PropertyName, PropertySave } from "@core/Property";
+import { type PropertyName } from "@core/Property";
+import { PropertySave } from "@core/Property";
 import { Type } from "class-transformer";
 import { IsString, ValidateNested } from "class-validator";
 
