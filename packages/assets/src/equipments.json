@@ -1,0 +1,107 @@
+[
+  {
+    "id": "200001",
+    "type": "Equipment",
+    "name": "屠龙刀",
+    "rarity": "Epic",
+    "description": "武林至尊,宝刀屠龙",
+    "equipmentType": "Weapon",
+    "properties": {
+      "ATK": "100",
+      "DEF": "0",
+      "HP": "0",
+      "MP": "0",
+      "SPD": "0"
+    }
+  },
+  {
+    "id": "200002",
+    "type": "Equipment",
+    "name": "倚天剑",
+    "rarity": "Epic",
+    "description": "倚天不出,谁与争锋",
+    "equipmentType": "Weapon",
+    "properties": {
+      "ATK": "100",
+      "DEF": "0",
+      "HP": "0",
+      "MP": "0",
+      "SPD": "0"
+    }
+  },
+  {
+    "id": "200003",
+    "type": "Equipment",
+    "name": "轩辕剑",
+    "rarity": "Legendary",
+    "description": "黄帝所用的轩辕剑",
+    "equipmentType": "Weapon",
+    "properties": {
+      "ATK": "120",
+      "DEF": "0",
+      "HP": "0",
+      "MP": "0",
+      "SPD": "0"
+    }
+  },
+  {
+    "id": "210001",
+    "type": "Equipment",
+    "name": "班尼路上衣",
+    "rarity": "Mythic",
+    "description": "班尼路, 牌子!",
+    "equipmentType": "Coat",
+    "properties": {
+      "ATK": "0",
+      "DEF": "0",
+      "HP": "1000",
+      "MP": "0",
+      "SPD": "0"
+    }
+  },
+  {
+    "id": "230001",
+    "type": "Equipment",
+    "name": "木屐",
+    "rarity": "Normal",
+    "description": "廉价的木屐",
+    "equipmentType": "Shoes",
+    "properties": {
+      "ATK": "0",
+      "DEF": "0",
+      "HP": "0",
+      "MP": "0",
+      "SPD": "10"
+    }
+  },
+  {
+    "id": "230002",
+    "type": "Equipment",
+    "name": "布鞋",
+    "rarity": "Rare",
+    "description": "老北京布鞋, 便宜耐穿",
+    "equipmentType": "Shoes",
+    "properties": {
+      "ATK": "0",
+      "DEF": "0",
+      "HP": "0",
+      "MP": "0",
+      "SPD": "12"
+    }
+  },
+  {
+    "id": "230003",
+    "type": "Equipment",
+    "name": "梅西战靴",
+    "rarity": "Legendary",
+    "description": "梅西2022夺冠穿的鞋子",
+    "equipmentType": "Shoes",
+    "properties": {
+      "ATK": "0",
+      "DEF": "0",
+      "HP": "0",
+      "MP": "0",
+      "SPD": "15"
+    }
+  }
+]

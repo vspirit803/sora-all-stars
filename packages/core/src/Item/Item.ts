@@ -1,29 +1,30 @@
 import { type ISerialize } from "@core/base";
 
+import { type ItemConfig } from "./ItemConfig";
 import { type ItemSave } from "./ItemSave";
 import { ItemType } from "./ItemType";
 
 export abstract class Item implements ISerialize<ItemSave> {
+  id: string;
   name: string;
   type: ItemType;
   description: string;
 
-  constructor() {
-    this.name = "";
-    this.description = "";
+  constructor(config: ItemConfig) {
+    this.id = config.id;
     this.type = ItemType.System;
+    this.name = config.name;
+    this.description = config.description;
   }
 
   loadSave(save: ItemSave): void {
-    this.name = save.name;
-    this.description = save.description;
+    this.id = save.id;
     this.type = save.type;
   }
 
   generateSave(): ItemSave {
     return {
-      name: this.name,
-      description: this.description,
+      id: this.id,
       type: this.type,
     };
   }

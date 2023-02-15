@@ -1,0 +1,17 @@
+id,type,name,rarity,description
+100001,Material,木材,Normal,"普通的木头,随处可见"
+100002,Material,石材,Normal,"普通的石头,随处可见"
+100003,Material,铁矿,Normal,"普通的铁矿,平平无奇"
+100004,Material,铜矿,Normal,"普通的铁矿,平平无奇"
+100011,Material,木板,Rare,遍布毛刺的木板
+100012,Material,石板,Rare,凹凸不平的石板
+100013,Material,铁板,Rare,坑坑洼洼的铁板
+100014,Material,铜板,Rare,粗糙加工的铜板
+100021,Material,平整的木板,Legendary,"经过平整的木板, 可以进一步加工"
+100022,Material,光滑的石板,Legendary,"打磨光滑的石板, 可以进一步加工"
+100023,Material,磨光的铁板,Legendary,"机械磨光的铁板, 可以制作各种工具"
+100024,Material,抛光的铜板,Legendary,"化学抛光的铜板, 可以制作各种工具"
+100031,Material,金丝楠木,Epic,"上好的金丝楠木, 常用于制作各种家具"
+100032,Material,和田玉,Epic,"温润滋泽, 用于制作各种首饰器具"
+100033,Material,302不锈钢,Epic,耐腐蚀
+100034,Material,高纯铜,Epic,"高纯度的铜, 具有多种工业用途"

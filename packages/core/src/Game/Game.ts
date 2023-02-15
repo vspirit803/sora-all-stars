@@ -1,13 +1,13 @@
 import { type ISerialize } from "@core/base";
 import { Character, type CharacterConfig } from "@core/Character";
-import { type Item, ItemFactory } from "@core/Item";
-import { CharactersConfig, InitSave } from "@sora-all-stars/assets";
+import { type Item, ItemConfigManager, ItemFactory, MaterialItemConfig } from "@core/Item";
+import { CharactersConfig, InitSave, MaterialsConfig } from "@sora-all-stars/assets";
 import { plainToInstance } from "class-transformer";
 import { validateSync } from "class-validator";
 
 import packageJson from "../../package.json";
 import { GameSave } from "./GameSave";
-import { IBattleObject, IBattleObjectDefault } from "./IBattleObject";
+import { type IBattleObject, IBattleObjectDefault } from "./IBattleObject";
 
 export class Game implements ISerialize<GameSave>, IBattleObject {
   version: string;
@@ -59,7 +59,7 @@ export class Game implements ISerialize<GameSave>, IBattleObject {
       return newCharacter;
     });
 
-    this.items = save.items.map((eachItemSave) => ItemFactory.getItem(eachItemSave));
+    this.items = save.items.map((eachItemSave) => ItemFactory.getItemFromSave(eachItemSave));
   }
 
   generateSave(): GameSave {
@@ -85,9 +85,27 @@ export class Game implements ISerialize<GameSave>, IBattleObject {
 
   static get instance(): Game {
     if (!Game.#instance) {
+      Game.validateAssets();
+      ItemConfigManager.init();
+
       Game.#instance = new Game();
     }
 
     return Game.#instance;
+  }
+
+  static validateAssets() {
+    const rawMaterials = MaterialsConfig;
+
+    const materialsConfig = plainToInstance(MaterialItemConfig, rawMaterials);
+
+    materialsConfig.forEach((material) => {
+      const errors = validateSync(material);
+
+      if (errors.length > 0) {
+        console.log(errors);
+        throw new Error("Invalid material");
+      }
+    });
   }
 }

@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import { Game} from "@sora-all-stars/core";
+import { Game } from "@sora-all-stars/core";
 
 import HelloWorld from "./components/HelloWorld.vue";
 
 const game = Game.instance;
-const rawSave = localStorage.getItem("save");
+// const rawSave = localStorage.getItem("save");
+const rawSave = null;
 
 if (rawSave !== null) {
   game.loadSave(JSON.parse(rawSave));
@@ -13,7 +14,7 @@ if (rawSave !== null) {
 }
 
 (window as unknown as Window & { game: Game }).game = game;
-console.log(game)
+console.log(game);
 
 save();
 

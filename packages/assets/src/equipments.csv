@@ -1,0 +1,10 @@
+id,type,name,rarity,description,equipmentType,properties.ATK,properties.DEF,properties.HP,properties.MP,properties.SPD
+200001,Equipment,屠龙刀,Epic,"武林至尊,宝刀屠龙",Weapon,100,0,0,0,0
+200002,Equipment,倚天剑,Epic,"倚天不出,谁与争锋",Weapon,100,0,0,0,0
+200003,Equipment,轩辕剑,Legendary,黄帝所用的轩辕剑,Weapon,120,0,0,0,0
+
+210001,Equipment,班尼路上衣,Mythic,"班尼路, 牌子!",Coat,0,0,1000,0,0
+
+230001,Equipment,木屐,Normal,廉价的木屐,Shoes,0,0,0,0,10
+230002,Equipment,布鞋,Rare,"老北京布鞋, 便宜耐穿",Shoes,0,0,0,0,12
+230003,Equipment,梅西战靴,Legendary,梅西2022夺冠穿的鞋子,Shoes,0,0,0,0,15

@@ -156,8 +156,25 @@
   "items": [
     {
       "type": "Material",
-      "name": "轩辕剑",
-      "description": "上古十神器之一"
+      "id": "100001",
+      "count": 1024
+    },
+    {
+      "type": "Material",
+      "id": "100034",
+      "count": 16
+    },
+    {
+      "type": "Equipment",
+      "id": "200001",
+      "uuid": "dbd9d58f-42cb-442e-9df7-af103229d5e6",
+      "createTime": "2023-01-01T00:00:00.000Z"
+    },
+    {
+      "type": "Equipment",
+      "id": "200003",
+      "uuid": "0367e4d5-1abd-4c60-9335-8fea1eb5e1fa",
+      "createTime": "2023-01-01T00:00:00.000Z"
     }
   ]
 }

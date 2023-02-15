@@ -1,14 +1,12 @@
-import { IsString } from "class-validator";
+import { IsEnum, IsNumberString, Length } from "class-validator";
 
-import { type ItemType } from "./ItemType";
+import { ItemType } from "./ItemType";
 
 export class ItemSave {
-  @IsString()
-  name!: string;
+  @Length(6, 6)
+  @IsNumberString({ no_symbols: true })
+  id!: string;
 
-  @IsString()
-  description!: string;
-
-  @IsString()
+  @IsEnum(ItemType)
   type!: ItemType;
 }

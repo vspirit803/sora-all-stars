@@ -1,10 +1,13 @@
 module.exports = {
   extends: [
-    // add more generic rulesets here, such as:
-    // 'eslint:recommended',
+    "../../.eslintrc.cjs",
     "plugin:vue/vue3-recommended",
-    // 'plugin:vue/recommended' // Use this if you are using Vue.js 2.x.
   ],
+  parser: "vue-eslint-parser", // 解析vue
+  parserOptions: {
+    tsconfigRootDir: "packages/web",
+    extraFileExtensions: [".vue"],
+  },
   rules: {
     "vue/max-attributes-per-line": [
       "error",
@@ -13,6 +16,6 @@ module.exports = {
       },
     ],
     // override/add rules settings here, such as:
-    // 'vue/no-unused-vars': 'error'
+    // "vue/no-unused-vars": "error"
   },
 };

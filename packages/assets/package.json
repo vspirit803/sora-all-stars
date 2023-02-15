@@ -2,11 +2,18 @@
   "name": "@sora-all-stars/assets",
   "version": "1.0.0",
   "description": "",
+  "type": "module",
   "main": "src/index.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "csv-parse": "^5.3.5"
+  },
+  "devDependencies": {
+    "@types/node": "^18.13.0"
+  }
 }

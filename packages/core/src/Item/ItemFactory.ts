@@ -1,25 +1,52 @@
 import { type ClassConstructor, plainToInstance } from "class-transformer";
 import { validateSync } from "class-validator";
 
+import { EquipmentItem, type EquipmentItemId, EquipmentItemSave } from "./EquipmentItem";
 import { type Item } from "./Item";
+import { ItemConfigManager } from "./ItemConfigManager";
 import { type ItemSave } from "./ItemSave";
 import { ItemType } from "./ItemType";
-import { MaterialItem } from "./MaterialItem";
-import { MaterialItemSave } from "./MaterialItemSave";
-import { SystemItem } from "./SystemItem";
-import { SystemItemSave } from "./SystemItemSave";
+import { MaterialItem, type MaterialItemId, MaterialItemSave } from "./MaterialItem";
+import { SystemItem, SystemItemSave } from "./SystemItem";
 
 export class ItemFactory {
-  static getItem(save: ItemSave): Item {
+  static getItemFromSave(save: ItemSave): Item {
     switch (save.type) {
     case ItemType.Material:
-      return ItemFactory.getMaterialItem(ItemFactory.getTypedSave(MaterialItemSave, save));
+      return ItemFactory.getMaterialItemFromSave(ItemFactory.getTypedSave(MaterialItemSave, save));
     case ItemType.System:
-      return ItemFactory.getSystemItem(ItemFactory.getTypedSave(SystemItemSave, save));
+      return ItemFactory.getSystemItemFromSave(ItemFactory.getTypedSave(SystemItemSave, save));
     case ItemType.Equipment:
-      throw new Error("Equipment items are not implemented yet");
-    // default:
-    //   throw new Error(`Invalid item type: ${save.type}`);
+      return ItemFactory.getEquipmentItemFromSave(ItemFactory.getTypedSave(EquipmentItemSave, save));
+    default:
+      // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+      throw new Error(`Invalid item type: ${save.type}`);
+    }
+  }
+
+  static getItem(id: MaterialItemId | EquipmentItemId): Item {
+    switch (id[0]) {
+    case "1": {
+      const materialConfig = ItemConfigManager.getMaterialItemConfig(id);
+
+      if (!materialConfig) {
+        throw new Error(`Invalid material item id: ${id}`);
+      }
+
+      return new MaterialItem(materialConfig);
+
+    }
+    case "2": {
+      const equipmentConfig = ItemConfigManager.getEquipmentItemConfig(id);
+
+      if (!equipmentConfig) {
+        throw new Error(`Invalid equipment item id: ${id}`);
+      }
+
+      return new EquipmentItem(equipmentConfig);
+    }
+    default:
+      throw new Error(`Invalid item id: ${id}`);
     }
   }
 
@@ -35,14 +62,38 @@ export class ItemFactory {
     return typedSave;
   }
 
-  static getMaterialItem(save: MaterialItemSave): MaterialItem {
-    const item = new MaterialItem();
+  static getMaterialItemFromSave(save: MaterialItemSave): MaterialItem {
+    const materialConfig = ItemConfigManager.getMaterialItemConfig(save.id);
+
+    if (!materialConfig) {
+      throw new Error(`Invalid material item id: ${save.id}`);
+    }
+
+    const item = new MaterialItem(materialConfig);
     item.loadSave(save);
     return item;
   }
 
-  static getSystemItem(save: SystemItemSave): SystemItem {
-    const item = new SystemItem();
+  static getSystemItemFromSave(save: SystemItemSave): SystemItem {
+    const systemItemConfig = ItemConfigManager.getSystemItemConfig(save.id);
+
+    if (!systemItemConfig) {
+      throw new Error(`Invalid system item id: ${save.id}`);
+    }
+
+    const item = new SystemItem(systemItemConfig);
+    item.loadSave(save);
+    return item;
+  }
+
+  static getEquipmentItemFromSave(save: EquipmentItemSave): EquipmentItem {
+    const equipmentItemConfig = ItemConfigManager.getEquipmentItemConfig(save.id);
+
+    if (!equipmentItemConfig) {
+      throw new Error(`Invalid equipment item id: ${save.id}`);
+    }
+
+    const item = new EquipmentItem(equipmentItemConfig);
     item.loadSave(save);
     return item;
   }

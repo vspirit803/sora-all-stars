@@ -1,7 +1,7 @@
 export interface IBattleObject {
-  onBattleStart: ()=> void;
+  onBattleStart: () => void;
 
-  onBattleEnd: ()=> void;
+  onBattleEnd: () => void
 }
 
 export const IBattleObjectDefault: IBattleObject = {
