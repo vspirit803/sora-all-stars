@@ -1,7 +1,7 @@
 import { type PropertyName } from "@core/Property";
 import { PropertySave } from "@core/Property";
 import { Type } from "class-transformer";
-import { IsString, ValidateNested } from "class-validator";
+import { IsNumber, IsString, ValidateNested } from "class-validator";
 
 class PropertiesSave implements Record<PropertyName, PropertySave> {
   @ValidateNested()
@@ -27,9 +27,12 @@ class PropertiesSave implements Record<PropertyName, PropertySave> {
 
 export class CharacterSave {
   @IsString()
-  name!: string;
+  id!: string;
 
   @ValidateNested()
   @Type(() => PropertiesSave)
   properties!: PropertiesSave;
+
+  @IsNumber()
+  level!: number;
 }

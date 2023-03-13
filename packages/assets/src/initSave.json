@@ -3,7 +3,8 @@
   "startTime": "2023-01-01T00:00:00.000Z",
   "characters": [
     {
-      "name": "织田信长",
+      "id": "000001",
+      "level": 1,
       "properties": {
         "ATK": {
           "name": "ATK",
@@ -28,7 +29,8 @@
       }
     },
     {
-      "name": "钟离",
+      "id": "000005",
+      "level": 10,
       "properties": {
         "ATK": {
           "name": "ATK",
@@ -53,7 +55,8 @@
       }
     },
     {
-      "name": "雷电将军",
+      "id": "000006",
+      "level": 8,
       "properties": {
         "ATK": {
           "name": "ATK",
@@ -78,7 +81,8 @@
       }
     },
     {
-      "name": "三上悠亚",
+      "id": "000010",
+      "level": 1,
       "properties": {
         "ATK": {
           "name": "ATK",
@@ -103,7 +107,8 @@
       }
     },
     {
-      "name": "石川澪",
+      "id": "000011",
+      "level": 1,
       "properties": {
         "ATK": {
           "name": "ATK",
@@ -128,7 +133,8 @@
       }
     },
     {
-      "name": "河北彩花",
+      "id": "000012",
+      "level": 1,
       "properties": {
         "ATK": {
           "name": "ATK",

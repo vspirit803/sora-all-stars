@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { Game } from "@sora-all-stars/core";
-
-import HelloWorld from "./components/HelloWorld.vue";
+import { RouterView } from "vue-router";
 
 const game = Game.instance;
 // const rawSave = localStorage.getItem("save");
@@ -24,40 +23,51 @@ function save() {
 </script>
 
 <template>
-  <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img
-        src="/vite.svg"
-        class="logo"
-        alt="Vite logo"
-      >
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo">
-    </a>
-  </div>
-  <button type="button" @click="save">
-    保存
-  </button>
+  <div class="app">
+    <div class="toolbar">
+      <button type="button" @click="save">
+        保存
+      </button>
+      <button type="button" @click="() => game.onBattleStart()">
+        战斗开始
+      </button>
+      <button type="button" @click="() => $router.push('/')">
+        首页
+      </button>
+      <button type="button" @click="() => $router.push('/characters')">
+        角色图鉴
+      </button>
+      <button type="button" @click="() => $router.push('/about')">
+        关于
+      </button>
+    </div>
 
-  <button type="button" @click="() => game.onBattleStart()">
-    战斗开始
-  </button>
-  <HelloWorld msg="Vite + Vue" />
+    <RouterView />
+  </div>
 </template>
 
-<style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-}
+<style lang="postcss" scoped>
+.app {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 1280px;
+  user-select: none;
 
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
+  aspect-ratio: 16 / 9;
+  background: #cccccc;
 
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
+  .toolbar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 150px;
+
+    display: flex;
+    gap: 10px;
+
+    flex-direction: column;
+    justify-content: space-between;
+  }
 }
 </style>

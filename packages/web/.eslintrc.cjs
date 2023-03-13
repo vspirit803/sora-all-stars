@@ -1,7 +1,7 @@
 module.exports = {
   extends: [
-    "../../.eslintrc.cjs",
     "plugin:vue/vue3-recommended",
+    "../../.eslintrc.cjs",
   ],
   parser: "vue-eslint-parser", // 解析vue
   parserOptions: {
@@ -15,6 +15,8 @@ module.exports = {
         singleline: 3,
       },
     ],
+    "object-curly-spacing": "off",
+    "@typescript-eslint/object-curly-spacing": ["error", "always"],
     // override/add rules settings here, such as:
     // "vue/no-unused-vars": "error"
   },

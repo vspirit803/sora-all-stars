@@ -1,7 +1,7 @@
 import { type ISerialize } from "@core/base";
-import { Character, type CharacterConfig } from "@core/Character";
+import { Character, CharacterConfigManager } from "@core/Character";
 import { type Item, ItemConfigManager, ItemFactory, MaterialItemConfig } from "@core/Item";
-import { CharactersConfig, InitSave, MaterialsConfig } from "@sora-all-stars/assets";
+import { InitSave, MaterialsConfig } from "@sora-all-stars/assets";
 import { plainToInstance } from "class-transformer";
 import { validateSync } from "class-validator";
 
@@ -15,6 +15,7 @@ export class Game implements ISerialize<GameSave>, IBattleObject {
   lastSaveTime?: Date;
   loadTime: Date;
   characters: Character[];
+  characterMap: Map<string, Character>;
   items: Item[];
 
   private constructor() {
@@ -22,6 +23,7 @@ export class Game implements ISerialize<GameSave>, IBattleObject {
     this.startTime = new Date();
     this.loadTime = new Date();
     this.characters = [];
+    this.characterMap = new Map();
     this.items = [];
   }
 
@@ -46,8 +48,8 @@ export class Game implements ISerialize<GameSave>, IBattleObject {
       : undefined;
 
     this.characters = save.characters.map((eachCharacterSave) => {
-      const characterName = eachCharacterSave.name;
-      const characterConfig = (<CharacterConfig[]>CharactersConfig).find((character) => character.name === characterName);
+      const characterName = eachCharacterSave.id;
+      const characterConfig = CharacterConfigManager.getCharacterConfig(characterName);
 
       if (!characterConfig) {
         throw new Error(`Invalid character name: ${characterName}`);
@@ -57,6 +59,9 @@ export class Game implements ISerialize<GameSave>, IBattleObject {
       newCharacter.loadSave(eachCharacterSave);
 
       return newCharacter;
+    });
+    this.characters.forEach((character) => {
+      this.characterMap.set(character.id, character);
     });
 
     this.items = save.items.map((eachItemSave) => ItemFactory.getItemFromSave(eachItemSave));
@@ -87,6 +92,7 @@ export class Game implements ISerialize<GameSave>, IBattleObject {
     if (!Game.#instance) {
       Game.validateAssets();
       ItemConfigManager.init();
+      CharacterConfigManager.init();
 
       Game.#instance = new Game();
     }

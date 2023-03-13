@@ -32,6 +32,7 @@ module.exports = {
     "import/no-duplicates": "error",
 
     "no-multi-spaces": ["error"],
+    "no-multiple-empty-lines": ["error", { max: 1, maxEOF: 0 }],
     "array-bracket-spacing": ["error", "never"],
     "spaced-comment": ["error", "always", {
       "line": {

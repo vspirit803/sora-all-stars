@@ -1,0 +1,119 @@
+.character {
+  &-page {
+    height: 100%;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 3fr 3fr;
+  }
+
+  &-list {
+    overflow: auto;
+
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    align-content: start;
+    padding: 16px;
+    gap: 16px;
+
+    &__item {
+      aspect-ratio: 1 / 1;
+      border-radius: 8px;
+      position: relative;
+      transition: all 0.1s ease-in-out;
+
+      &:hover {
+        outline: 2px solid #aaa;
+        transform: scale(1.1);
+      }
+
+      &--selected {
+        outline: 2px solid #aaa;
+        transform: scale(1.1);
+      }
+
+      &--unlock {
+        pointer-events: none;
+
+        ^&-image {
+          filter: blur(4px);
+        }
+
+        &::after {
+          content: "🔒";
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          color: #aaa;
+          font-size: 64px;
+          font-weight: bold;
+        }
+      }
+    }
+
+    &__item-image {
+      width: 100%;
+      object-fit: cover;
+      display: block;
+    }
+  }
+
+  &-detail {
+    padding: 16px;
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+
+    align-content: start;
+
+    &__name {
+      grid-column: 1 / 7;
+      font-size: 24px;
+      font-weight: bold;
+      margin: 16px;
+    }
+
+    &__image {
+      grid-column: 7 / 13;
+      grid-row: 1 / 4;
+      background-color: #aaa;
+      border-radius: 8px;
+
+      aspect-ratio: 2 / 3;
+    }
+
+    &__source {
+      grid-column: 1 / 7;
+      font-size: 16px;
+      margin: 16px;
+    }
+
+    &__property {
+      grid-column: 1 / 7;
+      margin: 16px;
+
+      display: grid;
+      grid-template-columns: 2fr 1fr 2fr;
+      gap: 12px;
+
+      .property-item {
+        &__name {
+          font-weight: bold;
+        }
+
+        &__base {
+        }
+
+        &__growth {
+        }
+      }
+    }
+
+    &__description {
+      grid-column: 1 / 13;
+      margin: 16px;
+      background-color: rgba(255, 228, 196, 0.3);
+      padding: 16px;
+      text-align: left;
+    }
+  }
+}
