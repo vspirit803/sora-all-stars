@@ -23,6 +23,13 @@ const optmizedResult = result.map((row) => {
   const newRow = {};
 
   Object.keys(row).forEach((key) => {
+    let value = row[key];
+
+    if(key.startsWith("[array]")) {
+      key = key.replace("[array]", "");
+      value = value.split(",").map((v) => v.trim());
+    }
+
     if (key.includes(".")) {
       const keys = key.split(".");
       let currObj = newRow;
@@ -35,9 +42,9 @@ const optmizedResult = result.map((row) => {
         currObj = currObj[eachKey];
       }
 
-      currObj[keys.pop()] = row[key];
+      currObj[keys.pop()] = value;
     } else {
-      newRow[key] = row[key];
+      newRow[key] = value;
     }
   });
 

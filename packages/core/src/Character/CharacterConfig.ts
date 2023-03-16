@@ -53,4 +53,9 @@ export class CharacterConfig {
   @ValidateNested()
   @Type(() => CharacterPropertyConfig)
   properties!: CharacterPropertyConfig;
+
+  @IsString({
+    each: true,
+  })
+  defaultSkills!: string[];
 }

@@ -1,5 +1,6 @@
 import { type ISerialize } from "@core/base";
 import { Property, type PropertyName } from "@core/Property";
+import { Skill, SkillConfigManager } from "@core/Skill";
 
 import { type CharacterConfig, type CharacterSinglePropertyConfig } from "./CharacterConfig";
 import { type CharacterSave } from "./CharacterSave";
@@ -10,6 +11,7 @@ export class Character implements ISerialize<CharacterSave> {
   level: number;
   properties: Record<PropertyName, Property>;
   config: CharacterConfig;
+  skills: Skill[];
 
   constructor(characterConfig: CharacterConfig) {
     this.id = characterConfig.id;
@@ -23,6 +25,8 @@ export class Character implements ISerialize<CharacterSave> {
         return [name, property];
       })
     ) as Record<PropertyName, Property>;
+    this.skills = characterConfig.defaultSkills.map((skillId) => new Skill(SkillConfigManager.getSkill(skillId)!));
+
     this.config = characterConfig;
   }
 

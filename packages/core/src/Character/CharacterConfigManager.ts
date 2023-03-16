@@ -5,10 +5,10 @@ import { validateSync } from "class-validator";
 import { CharacterConfig } from "./CharacterConfig";
 
 export class CharacterConfigManager {
-  static characterItemConfigMap: Map<string, CharacterConfig> = new Map();
+  static characterConfigMap: Map<string, CharacterConfig> = new Map();
 
   static getCharacterConfig(id: string): CharacterConfig | null {
-    return CharacterConfigManager.characterItemConfigMap.get(id) ?? null;
+    return CharacterConfigManager.characterConfigMap.get(id) ?? null;
   }
 
   static init() {
@@ -25,7 +25,7 @@ export class CharacterConfigManager {
         throw new Error("Invalid character config");
       }
 
-      CharacterConfigManager.characterItemConfigMap.set(currConfig.id, currConfig);
+      CharacterConfigManager.characterConfigMap.set(currConfig.id, currConfig);
     }
   }
 }

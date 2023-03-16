@@ -1,18 +1,34 @@
 <script setup lang="ts">
-import { CharacterConfig, CharacterConfigManager, Game } from "@sora-all-stars/core";
+import SvgIcon from "@jamescoyle/vue-icon";
+import { mdiFlaskEmpty, mdiFlaskRoundBottomEmpty, mdiShield, mdiShoeFormal, mdiSword } from "@mdi/js";
+import { CharacterConfig, CharacterConfigManager, CharacterPropertyConfig, Game, SkillConfigManager } from "@sora-all-stars/core";
 import { Ref, ref } from "vue";
 
 const game = Game.instance;
 
 const charactersMap = game.characterMap;
-const configMap = CharacterConfigManager.characterItemConfigMap;
-const characterConfigs: CharacterConfig[] = Array.from(configMap.values());
+const characterConfigMap = CharacterConfigManager.characterConfigMap;
+const skillConfigMap = SkillConfigManager.skillConfigMap;
+const characterConfigs: CharacterConfig[] = Array.from(characterConfigMap.values());
 
 const selectedCharacterConfig: Ref<CharacterConfig> = ref(characterConfigs[0]);
 
 function clickHandler(config: CharacterConfig) {
   selectedCharacterConfig.value = config;
 }
+
+interface IconConfig {
+  path: string;
+  color: string;
+}
+
+const ICON_MAP: Record<keyof CharacterPropertyConfig, IconConfig> = {
+  ATK: { path: mdiSword, color: "red" },
+  DEF: { path: mdiShield, color: "blue" },
+  HP: { path: mdiFlaskRoundBottomEmpty, color: "red" },
+  MP: { path: mdiFlaskEmpty, color: "blue" },
+  SPD: { path: mdiShoeFormal, color: "green" },
+};
 
 </script>
 <template>
@@ -24,13 +40,13 @@ function clickHandler(config: CharacterConfig) {
         class="character-list__item"
         :class="{
           'character-list__item--selected': each.id === selectedCharacterConfig.id,
-          'character-list__item--unlock': !charactersMap.has(each.id),
+          'character-list__item--lock': !charactersMap.has(each.id),
         }"
         @click="() => clickHandler(each)"
       >
         <!-- <img
           class="character-list__item-image"
-          :src="`/images/characters/${each.id}.jpg`"
+          :src="`/images/character/avatar/${each.id}.jpg`"
         > -->
         <img
           class="character-list__item-image"
@@ -53,7 +69,13 @@ function clickHandler(config: CharacterConfig) {
             :key="propName"
           >
             <div class="property-item__name">
-              {{ propName }}
+              <SvgIcon
+                class="property-item__name-icon"
+                type="mdi"
+                :path="ICON_MAP[propName].path"
+                :style="{ color: ICON_MAP[propName].color }"
+              />
+              <span>{{ propName }}</span>
             </div>
             <div class="property-item__base">
               {{ propConfig.base }}
@@ -64,6 +86,15 @@ function clickHandler(config: CharacterConfig) {
               </template>
             </div>
           </template>
+        </div>
+        <div class="character-detail__skill">
+          <div
+            v-for="index of 4"
+            :key="index"
+            class="skill-item"
+          >
+            {{ skillConfigMap.get(selectedCharacterConfig.defaultSkills[index - 1])?.name }}
+          </div>
         </div>
         <div class="character-detail__description">
           {{ selectedCharacterConfig.description || "暂无描述" }}
@@ -106,7 +137,7 @@ function clickHandler(config: CharacterConfig) {
         transform: scale(1.1);
       }
 
-      &--unlock {
+      &--lock {
         pointer-events: none;
 
         /* ^&-image */
@@ -120,8 +151,7 @@ function clickHandler(config: CharacterConfig) {
           top: 50%;
           left: 50%;
           transform: translate(-50%, -50%);
-          color: #aaa;
-          font-size: 64px;
+          font-size: 48px;
           font-weight: bold;
         }
       }
@@ -150,7 +180,7 @@ function clickHandler(config: CharacterConfig) {
 
     &__image {
       grid-column: 7 / 13;
-      grid-row: 1 / 4;
+      grid-row: 1 / 5;
       background-color: #aaa;
       border-radius: 8px;
 
@@ -170,10 +200,17 @@ function clickHandler(config: CharacterConfig) {
       display: grid;
       grid-template-columns: 2fr 1fr 2fr;
       gap: 12px;
+      /* align-content: start; */
 
       .property-item {
         &__name {
           font-weight: bold;
+          display: flex;
+          align-items: flex-start;
+
+          &-icon {
+            margin-right: 8px;
+          }
         }
 
         &__base {
@@ -190,6 +227,24 @@ function clickHandler(config: CharacterConfig) {
       background-color: rgba(255, 228, 196, 0.3);
       padding: 16px;
       text-align: left;
+    }
+
+    &__skill {
+      grid-column: 1 / 7;
+      margin: 16px;
+
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+
+      .skill-item {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        outline: 2px solid #aaa;
+      }
     }
   }
 }

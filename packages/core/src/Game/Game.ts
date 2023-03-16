@@ -1,6 +1,7 @@
 import { type ISerialize } from "@core/base";
 import { Character, CharacterConfigManager } from "@core/Character";
 import { type Item, ItemConfigManager, ItemFactory, MaterialItemConfig } from "@core/Item";
+import { SkillConfigManager } from "@core/Skill";
 import { InitSave, MaterialsConfig } from "@sora-all-stars/assets";
 import { plainToInstance } from "class-transformer";
 import { validateSync } from "class-validator";
@@ -93,6 +94,7 @@ export class Game implements ISerialize<GameSave>, IBattleObject {
       Game.validateAssets();
       ItemConfigManager.init();
       CharacterConfigManager.init();
+      SkillConfigManager.init();
 
       Game.#instance = new Game();
     }
