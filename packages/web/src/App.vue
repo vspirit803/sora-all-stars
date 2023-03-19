@@ -55,7 +55,7 @@ function save() {
   user-select: none;
 
   aspect-ratio: 16 / 9;
-  background: #cccccc;
+  background-color: #242424;
 
   .toolbar {
     position: absolute;

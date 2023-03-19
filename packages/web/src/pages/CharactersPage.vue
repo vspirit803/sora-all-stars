@@ -4,6 +4,8 @@ import { mdiFlaskEmpty, mdiFlaskRoundBottomEmpty, mdiShield, mdiShoeFormal, mdiS
 import { CharacterConfig, CharacterConfigManager, CharacterPropertyConfig, Game, SkillConfigManager } from "@sora-all-stars/core";
 import { Ref, ref } from "vue";
 
+import FallbackImage from "../components/FallbackImage.vue";
+
 const game = Game.instance;
 
 const charactersMap = game.characterMap;
@@ -44,14 +46,20 @@ const ICON_MAP: Record<keyof CharacterPropertyConfig, IconConfig> = {
         }"
         @click="() => clickHandler(each)"
       >
+        <FallbackImage
+          draggable="false"
+          class="character-list__item-image"
+          :src="`/images/character/avatar/${each.id}.jpg`"
+          alt="/vite.svg"
+        />
         <!-- <img
           class="character-list__item-image"
           :src="`/images/character/avatar/${each.id}.jpg`"
         > -->
-        <img
+        <!-- <img
           class="character-list__item-image"
           src="/vite.svg"
-        >
+        > -->
       </div>
     </div>
     <div class="character-detail">
@@ -59,7 +67,14 @@ const ICON_MAP: Record<keyof CharacterPropertyConfig, IconConfig> = {
         <div class="character-detail__name">
           {{ selectedCharacterConfig.name }}  {{ selectedCharacterConfig.gender === "M" ? "♂" : "♀" }}
         </div>
-        <div class="character-detail__image" />
+        <div class="character-detail__image">
+          <FallbackImage
+            draggable="false"
+            class="character-detail__image-tachie"
+            :src="`/images/character/tachie/${selectedCharacterConfig.id}.webp`"
+            alt="/vite.svg"
+          />
+        </div>
         <div class="character-detail__source">
           出自: {{ selectedCharacterConfig.source }}
         </div>
@@ -126,6 +141,7 @@ const ICON_MAP: Record<keyof CharacterPropertyConfig, IconConfig> = {
       border-radius: 8px;
       position: relative;
       transition: all 0.1s ease-in-out;
+      overflow: hidden;
 
       &:hover {
         outline: 2px solid #aaa;
@@ -155,12 +171,13 @@ const ICON_MAP: Record<keyof CharacterPropertyConfig, IconConfig> = {
           font-weight: bold;
         }
       }
-    }
 
-    &__item-image {
-      width: 100%;
-      object-fit: cover;
-      display: block;
+      &-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
     }
   }
 
@@ -181,10 +198,17 @@ const ICON_MAP: Record<keyof CharacterPropertyConfig, IconConfig> = {
     &__image {
       grid-column: 7 / 13;
       grid-row: 1 / 5;
-      background-color: #aaa;
       border-radius: 8px;
 
       aspect-ratio: 2 / 3;
+      overflow: hidden;
+
+      &-tachie {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
     }
 
     &__source {
@@ -200,7 +224,6 @@ const ICON_MAP: Record<keyof CharacterPropertyConfig, IconConfig> = {
       display: grid;
       grid-template-columns: 2fr 1fr 2fr;
       gap: 12px;
-      /* align-content: start; */
 
       .property-item {
         &__name {
