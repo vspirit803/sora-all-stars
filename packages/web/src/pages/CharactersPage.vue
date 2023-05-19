@@ -42,20 +42,16 @@ const ICON_MAP: Record<keyof CharacterPropertyConfig, IconConfig> = {
         class="character-list__item"
         :class="{
           'character-list__item--selected': each.id === selectedCharacterConfig.id,
-          'character-list__item--lock': !charactersMap.has(each.id),
+          // 'character-list__item--lock': !charactersMap.has(each.id),
         }"
         @click="() => clickHandler(each)"
       >
         <FallbackImage
           draggable="false"
           class="character-list__item-image"
-          :src="`/images/character/avatar/${each.id}.jpg`"
+          :src="`/images/character/avatar/${each.id}.png`"
           alt="/vite.svg"
         />
-        <!-- <img
-          class="character-list__item-image"
-          :src="`/images/character/avatar/${each.id}.jpg`"
-        > -->
         <!-- <img
           class="character-list__item-image"
           src="/vite.svg"

@@ -55,6 +55,7 @@ importers:
       vue-eslint-parser: ^9.1.0
       vue-router: ^4.1.6
       vue-tsc: ^1.0.11
+      vuetify: ^3.1.13
     dependencies:
       '@jamescoyle/vue-icon': 0.1.2
       '@mdi/js': 7.1.96
@@ -62,6 +63,7 @@ importers:
       '@sora-all-stars/core': link:../core
       vue: 3.2.45
       vue-router: 4.1.6_vue@3.2.45
+      vuetify: 3.1.13_vue@3.2.45
     devDependencies:
       '@vitejs/plugin-vue': 4.0.0_vite@4.0.4+vue@3.2.45
       eslint-plugin-vue: 9.9.0
@@ -2189,6 +2191,25 @@ packages:
       '@vue/runtime-dom': 3.2.45
       '@vue/server-renderer': 3.2.45_vue@3.2.45
       '@vue/shared': 3.2.45
+
+  /vuetify/3.1.13_vue@3.2.45:
+    resolution: {integrity: sha512-mC2UvWqS3Ne/aZ6Q+79kiL36xSe5jGxm0KWWq2e4SRxuqIE14IbyzqfXvU0bEqns0dHU5dOiKCMM9jHZFDLKgQ==}
+    engines: {node: ^12.20 || >=14.13}
+    peerDependencies:
+      vite-plugin-vuetify: ^1.0.0-alpha.12
+      vue: ^3.2.0
+      vue-i18n: ^9.0.0
+      webpack-plugin-vuetify: ^2.0.0-alpha.11
+    peerDependenciesMeta:
+      vite-plugin-vuetify:
+        optional: true
+      vue-i18n:
+        optional: true
+      webpack-plugin-vuetify:
+        optional: true
+    dependencies:
+      vue: 3.2.45
+    dev: false
 
   /which-boxed-primitive/1.0.2:
     resolution: {integrity: sha512-bwZdv0AKLpplFY2KZRX6TvyuN7ojjr7lwkg6ml0roIy9YeuSr7JS372qlNW18UQYzgYK9ziGcerWqZOmEn9VNg==}

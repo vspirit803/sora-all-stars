@@ -28,7 +28,7 @@ function save() {
       <button type="button" @click="save">
         保存
       </button>
-      <button type="button" @click="() => game.onBattleStart()">
+      <button type="button" @click="() => $router.push('/battle')">
         战斗开始
       </button>
       <button type="button" @click="() => $router.push('/')">
@@ -51,7 +51,8 @@ function save() {
   display: flex;
   flex-direction: column;
   align-items: center;
-  min-width: 1280px;
+  min-width: 1600px;
+  max-width: 1600px;
   user-select: none;
 
   aspect-ratio: 16 / 9;
