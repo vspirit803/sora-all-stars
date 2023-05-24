@@ -20,7 +20,7 @@ export class BattleSkill implements IBattleSkill {
   }
 }
 
-const DefaultCast: SkillCast = async function(target) {
+const DefaultCast: SkillCast = async function (target) {
   console.log(`[${this.owner.name}] 对 [${target.name}] 释放了 [${this.name}]`);
 
   const battle = this.owner.battle;
@@ -35,10 +35,10 @@ const DefaultCast: SkillCast = async function(target) {
   await battle.dispatch(BattleEventType.SKILL_CAST, data);
 };
 
-const DefaultGetPriority: GetSkillPriority = function() {
+const DefaultGetPriority: GetSkillPriority = function () {
   return 1;
 };
 
-const DefaultGetTarget: GetSkillTarget = function() {
+const DefaultGetTarget: GetSkillTarget = function () {
   return this.owner.getTarget();
 };

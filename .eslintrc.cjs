@@ -165,7 +165,7 @@ module.exports = {
         "keyword-spacing": "off",
         "@typescript-eslint/keyword-spacing": "error",
         "space-before-function-paren": "off",
-        "@typescript-eslint/space-before-function-paren": ["error", "never"],
+        "@typescript-eslint/space-before-function-paren": ["error", {"anonymous": "always", "named": "never", "asyncArrow": "always"}],
         "padding-line-between-statements": "off",
         "@typescript-eslint/padding-line-between-statements":
           "error",

@@ -5,7 +5,7 @@ export function FunctionTimer(
 ): PropertyDescriptor {
   const originalMethod = descriptor.value as (...args: unknown[]) => unknown;
 
-  descriptor.value = function(...args: unknown[]) {
+  descriptor.value = function (...args: unknown[]) {
     const start = performance.now();
     const result: unknown = originalMethod.apply(this, args);
     const end = performance.now();

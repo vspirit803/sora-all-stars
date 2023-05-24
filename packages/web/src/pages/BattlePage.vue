@@ -3,7 +3,16 @@ import { Battle, BattleEventType, BattleResult } from "@sora-all-stars/core";
 import { onBeforeUnmount, type Ref, ref, shallowRef } from "vue";
 
 import { ACTION_DELAY } from "../constants";
-import BattleCharacterUI, { type IBattleUIObject } from "./BattleCharacterUI.vue";
+import BattleCharacterUI from "./BattleCharacterUI.vue";
+import BattleStats from "./BattleStats.vue";
+
+interface IBattleUIObject { // 直接导入似乎eslint无法识别
+  id: string;
+  uuid: string;
+  name: string;
+  hp: number;
+  currHP: number;
+}
 
 interface IBattleUI {
   name: string;
@@ -11,7 +20,8 @@ interface IBattleUI {
 }
 
 const battleUI: Ref<IBattleUI | null> = ref(null);
-const battleStat: Ref<Record<string, number>> = ref({});
+const battleRound: Ref<number> = ref(0);
+const battleStat: Ref<Record<string, { damage: number; damaged: number, heal: number }>> = ref({});
 const battle = shallowRef<Battle | null>(null);
 
 function start() {
@@ -31,12 +41,11 @@ function start() {
     }))),
   };
 
-  battleStat.value = {
-    turn: 0,
-  };
+  battleRound.value = 0;
+  battleStat.value = {};
 
-  currBattle.listen(BattleEventType.TURN_START, async(data) => {
-    battleStat.value.turn = data.turn;
+  currBattle.listen(BattleEventType.TURN_START, (data) => {
+    battleRound.value = data.turn;
     console.log(`==========第 ${data.turn} 回合开始==========`);
   });
 
@@ -56,16 +65,31 @@ function start() {
     }
 
     const attacker = data.source.name;
-    const totalDamage = battleStat.value[`damage_${attacker}`] ?? 0;
-    battleStat.value[`damage_${attacker}`] = totalDamage + data.realDamage;
-    const totalDamated = battleStat.value[`damaged_${data.target.name}`] ?? 0;
-    battleStat.value[`damaged_${data.target.name}`] = totalDamated + data.realDamage;
+    const target = data.target.name;
 
-    // console.log(`[${data.source.name}] 对 [${data.target.name}] 造成了 ${data.realDamage} 点伤害(原始伤害: ${data.damage})`);
+    if (!battleStat.value[attacker]) {
+      battleStat.value[attacker] = {
+        damage: 0,
+        damaged: 0,
+        heal: 0,
+      };
+    }
+
+    if (!battleStat.value[target]) {
+      battleStat.value[target] = {
+        damage: 0,
+        damaged: 0,
+        heal: 0,
+      };
+    }
+
+    battleStat.value[attacker].damage += data.realDamage;
+    battleStat.value[target].damaged += data.realDamage;
+
     character.currHP -= data.realDamage;
   });
 
-  currBattle.listen(BattleEventType.HEALED, async(data) => {
+  currBattle.listen(BattleEventType.HEALED, (data) => {
     if (!battleUI.value) {
       return;
     }
@@ -77,14 +101,21 @@ function start() {
     }
 
     const healer = data.source.name;
-    const totalHealValue = battleStat.value[`heal_${healer}`] ?? 0;
-    battleStat.value[`heal_${healer}`] = totalHealValue + data.realHealValue;
 
-    // console.log(`[${data.source.name}] 对 [${data.target.name}] 治疗了 ${data.realHealValue} 点生命值(原始治疗: ${data.healValue})`);
+    if (!battleStat.value[healer]) {
+      battleStat.value[healer] = {
+        damage: 0,
+        damaged: 0,
+        heal: 0,
+      };
+    }
+
+    battleStat.value[healer].heal += data.realHealValue;
+
     character.currHP += data.realHealValue;
   });
 
-  currBattle.listen(BattleEventType.ACTION_END, async(data) => {
+  currBattle.listen(BattleEventType.ACTION_END, async (data) => {
     await new Promise((resolve) => setTimeout(resolve, ACTION_DELAY));
   });
 
@@ -116,25 +147,8 @@ onBeforeUnmount(() => {
       开始
     </v-btn>
     <div class="battle-stat">
-      <div>回合数: {{ battleStat.turn }}</div>
-      <div
-        v-for="each of Object.keys(battleStat).filter((each) => each.startsWith('damage_'))"
-        :key="each"
-      >
-        {{ each.replace('damage_', '') }} 造成伤害: {{ battleStat[each] }}
-      </div>
-      <div
-        v-for="each of Object.keys(battleStat).filter((each) => each.startsWith('heal_'))"
-        :key="each"
-      >
-        {{ each.replace('heal_', '') }} 治疗生命值: {{ battleStat[each] }}
-      </div>
-      <div
-        v-for="each of Object.keys(battleStat).filter((each) => each.startsWith('damaged_'))"
-        :key="each"
-      >
-        {{ each.replace('damaged_', '') }} 受到伤害: {{ battleStat[each] }}
-      </div>
+      <div>回合数: {{ battleRound }}</div>
+      <BattleStats :battle-stats="battleStat" />
     </div>
     <div v-if="battleUI !== null && battle" class="battle-team battle-team-2">
       <BattleCharacterUI

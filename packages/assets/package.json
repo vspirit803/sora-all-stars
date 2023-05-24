@@ -11,9 +11,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "csv-parse": "^5.3.5"
+    "csv-parse": "^5.3.10"
   },
   "devDependencies": {
-    "@types/node": "^18.13.0"
+    "@types/node": "^18.16.13"
   }
 }

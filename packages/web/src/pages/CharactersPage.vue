@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import SvgIcon from "@jamescoyle/vue-icon";
 import { mdiFlaskEmpty, mdiFlaskRoundBottomEmpty, mdiShield, mdiShoeFormal, mdiSword } from "@mdi/js";
-import { CharacterConfig, CharacterConfigManager, CharacterPropertyConfig, Game, SkillConfigManager } from "@sora-all-stars/core";
-import { Ref, ref } from "vue";
+import { type CharacterConfig, CharacterConfigManager, type CharacterPropertyConfig, Game, SkillConfigManager } from "@sora-all-stars/core";
+import { type Ref, ref } from "vue";
 
 import FallbackImage from "../components/FallbackImage.vue";
 

@@ -11,7 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@sora-all-stars/assets": "workspace:^1.0.0",
+    "@sora-all-stars/assets": "workspace:^",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.0",
     "reflect-metadata": "^0.1.13"

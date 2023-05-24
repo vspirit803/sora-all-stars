@@ -10,7 +10,7 @@ interface ISkillScript {
 
 export const SkillCasts = {
   斩击: {
-    cast: (async function(this: IBattleSkill, target: IBattleObject) {
+    cast: (async function (this: IBattleSkill, target: IBattleObject) {
       const battle = this.owner.battle;
 
       const data: ISkillCastEventData = {
@@ -24,12 +24,12 @@ export const SkillCasts = {
       await target.attacked(this.owner);
 
     }),
-    getPriority: function(this: IBattleSkill) {
+    getPriority: function (this: IBattleSkill) {
       return 1;
     },
   },
   唧唧歪歪: {
-    cast: async function(this: IBattleSkill, target: IBattleObject) {
+    cast: async function (this: IBattleSkill, target: IBattleObject) {
       const battle = this.owner.battle;
       const targets = target.team.filter(each => each.isAlive);
 
@@ -45,12 +45,12 @@ export const SkillCasts = {
         await each.attacked(this.owner);
       }));
     },
-    getPriority: function(this: IBattleSkill) {
+    getPriority: function (this: IBattleSkill) {
       return 1;
     },
   },
   推气过宫: {
-    cast: async function(this: IBattleSkill, target: IBattleObject) {
+    cast: async function (this: IBattleSkill, target: IBattleObject) {
       const battle = this.owner.battle;
       const targets = target.team.filter(each => each.isAlive);
       const baseHealValue = this.owner.hp * 0.06;
@@ -78,7 +78,7 @@ export const SkillCasts = {
         await battle.dispatch(BattleEventType.HEALED, healedData);
       }));
     },
-    getPriority: function(this: IBattleSkill) {
+    getPriority: function (this: IBattleSkill) {
       const hasMemberInDanger = this.owner.team.some((each) => each.currHP / each.hp < 0.8);
 
       if (hasMemberInDanger) {
@@ -87,7 +87,7 @@ export const SkillCasts = {
 
       return 1;
     },
-    getTarget: function(this: IBattleSkill) {
+    getTarget: function (this: IBattleSkill) {
       const members = this.owner.team.filter(each => each.isAlive);
       // get the member with lowest hp
       const target = members.reduce((prev, curr) => curr.currHP < prev.currHP ? curr : prev);
@@ -96,7 +96,7 @@ export const SkillCasts = {
     },
   },
   无想的一刀: {
-    cast: async function(this: IBattleSkill, target: IBattleObject) {
+    cast: async function (this: IBattleSkill, target: IBattleObject) {
       const battle = this.owner.battle;
 
       const targets = target.team.filter(each => each.isAlive);
@@ -113,7 +113,7 @@ export const SkillCasts = {
         await each.attacked(this.owner, 0.75);
       }));
     },
-    getPriority: function(this: IBattleSkill) {
+    getPriority: function (this: IBattleSkill) {
       return 2;
     },
   },

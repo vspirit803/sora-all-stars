@@ -12,11 +12,11 @@ watchEffect(() => {
   srcValid.value = false;
 
   fetch(props.src).then((res) => {
-    if(res.status === 200) {
+    if (res.status === 200) {
       srcValid.value = true;
     }
-  })
-})
+  }, () => void 0);
+});
 
 </script>
 <template>

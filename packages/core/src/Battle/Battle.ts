@@ -172,7 +172,7 @@ export class Battle {
     钟离.critDmg = 1.2;
     钟离.skills.push(this.generateSkill(钟离));
 
-    battle.listen(BattleEventType.DAMAGED, async(data) => {
+    battle.listen(BattleEventType.DAMAGED, async (data) => {
       if (data.target !== 钟离) {
         return;
       }

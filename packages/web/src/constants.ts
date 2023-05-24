@@ -1,1 +1,1 @@
-export const ACTION_DELAY = 100;
+export const ACTION_DELAY = 500;
