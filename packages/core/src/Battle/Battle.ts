@@ -95,11 +95,11 @@ export class Battle {
         .sort((a, b) => b.spd - a.spd);
 
       if (this.turn > 0) {
-        await this.dispatch( BattleEventType.TURN_END, { type: BattleEventType.TURN_END, turn: this.turn });
+        await this.dispatch(BattleEventType.TURN_END, { type: BattleEventType.TURN_END, turn: this.turn });
       }
 
       this.turn += 1;
-      await this.dispatch( BattleEventType.TURN_START, { type: BattleEventType.TURN_START, turn: this.turn });
+      await this.dispatch(BattleEventType.TURN_START, { type: BattleEventType.TURN_START, turn: this.turn });
     }
 
     const curr = this.thisTurn.shift();
@@ -282,6 +282,24 @@ export class Battle {
   listen(eventType: BattleEventType.HEALED, handler: (data: IHealedEventData) => Promise<void> | void): void;
   listen(eventType: BattleEventType, handler: (data: any) => Promise<void> | void) {
     this.listeners.push({ eventType, handler });
+  }
+
+  removeListener(eventType: BattleEventType.TURN_START, handler: (data: ITurnStartEventData) => Promise<void> | void): void;
+  removeListener(eventType: BattleEventType.TURN_END, handler: (data: ITurnEndEventData) => Promise<void> | void): void;
+  removeListener(eventType: BattleEventType.ACTION_START, handler: (data: IActionStartEventData) => Promise<void> | void): void;
+  removeListener(eventType: BattleEventType.ACTION_END, handler: (data: IActionEndEventData) => Promise<void> | void): void;
+  removeListener(eventType: BattleEventType.SKILL_CAST, handler: (data: ISkillCastEventData) => Promise<void> | void): void;
+  removeListener(eventType: BattleEventType.SKILL_CASTED, handler: (data: ISkillCastedEventData) => Promise<void> | void): void;
+  removeListener(eventType: BattleEventType.DAMAGE, handler: (data: IDamageEventData) => Promise<void> | void): void;
+  removeListener(eventType: BattleEventType.DAMAGED, handler: (data: IDamagedEventData) => Promise<void> | void): void;
+  removeListener(eventType: BattleEventType.HEAL, handler: (data: IHealEventData) => Promise<void> | void): void;
+  removeListener(eventType: BattleEventType.HEALED, handler: (data: IHealedEventData) => Promise<void> | void): void;
+  removeListener(eventType: BattleEventType, handler: (data: any) => Promise<void> | void) {
+    const index = this.listeners.findIndex((listener) => listener.eventType === eventType && listener.handler === handler);
+
+    if (index !== -1) {
+      this.listeners.splice(index, 1);
+    }
   }
 
   async dispatch(eventType: BattleEventType.TURN_START, data: ITurnStartEventData): Promise<void>;

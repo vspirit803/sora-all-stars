@@ -37,6 +37,9 @@ function save() {
       <button type="button" @click="() => $router.push('/characters')">
         角色图鉴
       </button>
+      <button type="button" @click="() => $router.push('/backpack')">
+        背包
+      </button>
       <button type="button" @click="() => $router.push('/about')">
         关于
       </button>
@@ -60,6 +63,7 @@ function save() {
 
   .toolbar {
     position: absolute;
+    z-index: 10;
     top: 0;
     left: 0;
     width: 150px;

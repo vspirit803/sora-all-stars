@@ -42,7 +42,8 @@ const ICON_MAP: Record<keyof CharacterPropertyConfig, IconConfig> = {
         class="character-list__item"
         :class="{
           'character-list__item--selected': each.id === selectedCharacterConfig.id,
-          // 'character-list__item--lock': !charactersMap.has(each.id),
+          ['character-list__item--' + each.rarity]: true,
+        // 'character-list__item--lock': !charactersMap.has(each.id),
         }"
         @click="() => clickHandler(each)"
       >
@@ -52,16 +53,16 @@ const ICON_MAP: Record<keyof CharacterPropertyConfig, IconConfig> = {
           :src="`/images/character/avatar/${each.id}.png`"
           alt="/vite.svg"
         />
-        <!-- <img
-          class="character-list__item-image"
-          src="/vite.svg"
-        > -->
+        <!-- <div class="character-list__item-inner-line" /> -->
+        <div class="character-list__item-name">
+          {{ each.name }}
+        </div>
       </div>
     </div>
     <div class="character-detail">
       <template v-if="selectedCharacterConfig">
         <div class="character-detail__name">
-          {{ selectedCharacterConfig.name }}  {{ selectedCharacterConfig.gender === "M" ? "♂" : "♀" }}
+          {{ selectedCharacterConfig.name }} {{ selectedCharacterConfig.gender === "M" ? "♂" : "♀" }}
         </div>
         <div class="character-detail__image">
           <FallbackImage
@@ -75,10 +76,7 @@ const ICON_MAP: Record<keyof CharacterPropertyConfig, IconConfig> = {
           出自: {{ selectedCharacterConfig.source }}
         </div>
         <div class="character-detail__property">
-          <template
-            v-for="(propConfig, propName) in selectedCharacterConfig.properties"
-            :key="propName"
-          >
+          <template v-for="(propConfig, propName) in selectedCharacterConfig.properties" :key="propName">
             <div class="property-item__name">
               <SvgIcon
                 class="property-item__name-icon"
@@ -99,11 +97,7 @@ const ICON_MAP: Record<keyof CharacterPropertyConfig, IconConfig> = {
           </template>
         </div>
         <div class="character-detail__skill">
-          <div
-            v-for="index of 4"
-            :key="index"
-            class="skill-item"
-          >
+          <div v-for="index of 4" :key="index" class="skill-item">
             {{ skillConfigMap.get(selectedCharacterConfig.defaultSkills[index - 1])?.name }}
           </div>
         </div>
@@ -133,20 +127,49 @@ const ICON_MAP: Record<keyof CharacterPropertyConfig, IconConfig> = {
     gap: 16px;
 
     &__item {
-      aspect-ratio: 1 / 1;
-      border-radius: 8px;
+      border-radius: 0 16px 0 0;
       position: relative;
       transition: all 0.1s ease-in-out;
       overflow: hidden;
 
+      &--Normal {
+        .character-list__item-image {
+          background-color: var(--color-rarity-normal);
+        }
+      }
+
+      &--Rare {
+        .character-list__item-image {
+          background-color: var(--color-rarity-rare);
+        }
+      }
+
+      &--Legendary {
+        .character-list__item-image {
+
+          background-color: var(--color-rarity-legendary);
+        }
+      }
+
+      &--Epic {
+        .character-list__item-image {
+          background-color: var(--color-rarity-epic);
+        }
+      }
+
+      &--Mythic {
+        .character-list__item-image {
+          background-color: var(--color-rarity-mythic);
+        }
+      }
+
       &:hover {
-        outline: 2px solid #aaa;
-        transform: scale(1.1);
+        outline: 4px solid white;
       }
 
       &--selected {
-        outline: 2px solid #aaa;
-        transform: scale(1.1);
+        outline: 4px solid white;
+        transform: scale(1.05);
       }
 
       &--lock {
@@ -169,10 +192,22 @@ const ICON_MAP: Record<keyof CharacterPropertyConfig, IconConfig> = {
       }
 
       &-image {
+        aspect-ratio: 1 / 1;
         width: 100%;
-        height: 100%;
+        /* height: 100%; */
         object-fit: cover;
         display: block;
+      }
+
+      &-inner-line {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: calc(100% - 16px);
+        height: 100%;
+        margin: 8px 8px 0;
+        border-radius: 0 16px 0 0;
+        outline: 2px rgba(127, 127, 127, 0.5) solid;
       }
     }
   }
@@ -232,11 +267,9 @@ const ICON_MAP: Record<keyof CharacterPropertyConfig, IconConfig> = {
           }
         }
 
-        &__base {
-        }
+        &__base {}
 
-        &__growth {
-        }
+        &__growth {}
       }
     }
 

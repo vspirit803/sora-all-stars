@@ -3,6 +3,7 @@
     "id": "000001",
     "name": "织田信长",
     "gender": "M",
+    "rarity": "Rare",
     "source": "信长之野望",
     "description": "绰号第六天魔王，战国三英杰之一。",
     "properties": {
@@ -36,6 +37,7 @@
     "id": "000002",
     "name": "斧王",
     "gender": "M",
+    "rarity": "Rare",
     "source": "DotA",
     "description": "一个接着一个，斧王将他的敌人斩落。作为团队的先锋，他使敌人陷入战斗，致命的旋斧会对他们的攻击作出回应。一旦敌人出现衰迹，他将挥舞着淘汰之刃挺身而出。",
     "properties": {
@@ -69,6 +71,7 @@
     "id": "000003",
     "name": "敌法师",
     "gender": "M",
+    "rarity": "Rare",
     "source": "DotA",
     "description": "只要给了敌法师积累力量的机会，他的碾压将无法阻挡。进，他会枯竭敌人的魔力，退，他可短距离传送。想将他逼入困境绝非易事。",
     "properties": {
@@ -102,6 +105,7 @@
     "id": "000004",
     "name": "温迪",
     "gender": "M",
+    "rarity": "Epic",
     "source": "原神",
     "description": "蒙德城诸多吟游诗人中的一位，自由自在地穿行在街头巷尾",
     "properties": {
@@ -135,6 +139,7 @@
     "id": "000005",
     "name": "钟离",
     "gender": "M",
+    "rarity": "Epic",
     "source": "原神",
     "description": "被「往生堂」请来的神秘客人,知识渊博,对各种事物都颇有见地。",
     "properties": {
@@ -168,6 +173,7 @@
     "id": "000006",
     "name": "雷电将军",
     "gender": "F",
+    "rarity": "Epic",
     "source": "原神",
     "description": "其身为御建鸣神主尊大御所大人，许稻妻人民以亘古不变之「永恒」。",
     "properties": {
@@ -201,6 +207,7 @@
     "id": "000007",
     "name": "纳西妲",
     "gender": "F",
+    "rarity": "Epic",
     "source": "原神",
     "description": "深居净善宫的笼中之鸟，只能在梦中将世界尽收眼底。",
     "properties": {
@@ -234,6 +241,7 @@
     "id": "000008",
     "name": "御坂美琴",
     "gender": "F",
+    "rarity": "Normal",
     "source": "魔法禁书目录",
     "description": "",
     "properties": {
@@ -267,6 +275,7 @@
     "id": "000009",
     "name": "白井黑子",
     "gender": "F",
+    "rarity": "Normal",
     "source": "魔法禁书目录",
     "description": "",
     "properties": {
@@ -300,6 +309,7 @@
     "id": "000010",
     "name": "三上悠亚",
     "gender": "F",
+    "rarity": "Rare",
     "source": "岛国动作片",
     "description": "",
     "properties": {
@@ -333,6 +343,7 @@
     "id": "000011",
     "name": "石川澪",
     "gender": "F",
+    "rarity": "Rare",
     "source": "岛国动作片",
     "description": "",
     "properties": {
@@ -366,6 +377,7 @@
     "id": "000012",
     "name": "河北彩花",
     "gender": "F",
+    "rarity": "Rare",
     "source": "岛国动作片",
     "description": "",
     "properties": {
@@ -399,6 +411,7 @@
     "id": "000013",
     "name": "桃乃木香奈",
     "gender": "F",
+    "rarity": "Normal",
     "source": "岛国动作片",
     "description": "",
     "properties": {
@@ -432,6 +445,7 @@
     "id": "000014",
     "name": "楪可怜",
     "gender": "F",
+    "rarity": "Normal",
     "source": "岛国动作片",
     "description": "",
     "properties": {
@@ -465,6 +479,7 @@
     "id": "000015",
     "name": "丰臣秀吉",
     "gender": "M",
+    "rarity": "Rare",
     "source": "信长之野望",
     "description": "战国三英杰之一。",
     "properties": {
@@ -498,6 +513,7 @@
     "id": "000016",
     "name": "德川家康",
     "gender": "M",
+    "rarity": "Rare",
     "source": "信长之野望",
     "description": "日本战国时代的大名、元和年间朝廷的太政大臣、江户幕府第一代征夷大将军，为日本于1598年至1616年的实际政治领袖，与其同时代的织田信长、丰臣秀吉并称“战国三杰”。",
     "properties": {
@@ -531,6 +547,7 @@
     "id": "000017",
     "name": "陈靖仇",
     "gender": "M",
+    "rarity": "Normal",
     "source": "轩辕剑",
     "description": "单机游戏《轩辕剑叁外传：天之痕》第一男主角。",
     "properties": {
@@ -564,6 +581,7 @@
     "id": "000018",
     "name": "于小雪",
     "gender": "F",
+    "rarity": "Rare",
     "source": "轩辕剑",
     "description": "女娲石转世。",
     "properties": {
@@ -597,6 +615,7 @@
     "id": "000019",
     "name": "拓跋玉儿",
     "gender": "F",
+    "rarity": "Normal",
     "source": "轩辕剑",
     "description": "",
     "properties": {
@@ -630,6 +649,7 @@
     "id": "000020",
     "name": "张烈",
     "gender": "M",
+    "rarity": "Normal",
     "source": "轩辕剑",
     "description": "",
     "properties": {
@@ -663,6 +683,7 @@
     "id": "000021",
     "name": "宇文拓",
     "gender": "M",
+    "rarity": "Legendary",
     "source": "轩辕剑",
     "description": "昆仑镜转世。",
     "properties": {
@@ -688,8 +709,106 @@
       }
     },
     "defaultSkills": [
-      "600000",
-      "600021"
+      "600000"
+    ]
+  },
+  {
+    "id": "000022",
+    "name": "萧峰",
+    "gender": "M",
+    "rarity": "Legendary",
+    "source": "金庸",
+    "description": "",
+    "properties": {
+      "ATK": {
+        "base": "120",
+        "growth": "20"
+      },
+      "DEF": {
+        "base": "100",
+        "growth": "10"
+      },
+      "HP": {
+        "base": "100",
+        "growth": "50"
+      },
+      "MP": {
+        "base": "100",
+        "growth": "10"
+      },
+      "SPD": {
+        "base": "100",
+        "growth": "0"
+      }
+    },
+    "defaultSkills": [
+      "600000"
+    ]
+  },
+  {
+    "id": "000023",
+    "name": "盘古",
+    "gender": "M",
+    "rarity": "Mythic",
+    "source": "中国神话",
+    "description": "开天辟地的创世神，死后天地及万物都由其身躯和器官转化而成。",
+    "properties": {
+      "ATK": {
+        "base": "120",
+        "growth": "20"
+      },
+      "DEF": {
+        "base": "100",
+        "growth": "10"
+      },
+      "HP": {
+        "base": "100",
+        "growth": "50"
+      },
+      "MP": {
+        "base": "100",
+        "growth": "10"
+      },
+      "SPD": {
+        "base": "100",
+        "growth": "0"
+      }
+    },
+    "defaultSkills": [
+      "600000"
+    ]
+  },
+  {
+    "id": "000024",
+    "name": "女娲",
+    "gender": "F",
+    "rarity": "Mythic",
+    "source": "中国神话",
+    "description": "人首蛇身，抟土造人，炼石补天。",
+    "properties": {
+      "ATK": {
+        "base": "120",
+        "growth": "20"
+      },
+      "DEF": {
+        "base": "100",
+        "growth": "10"
+      },
+      "HP": {
+        "base": "100",
+        "growth": "50"
+      },
+      "MP": {
+        "base": "100",
+        "growth": "10"
+      },
+      "SPD": {
+        "base": "100",
+        "growth": "0"
+      }
+    },
+    "defaultSkills": [
+      "600000"
     ]
   }
 ]

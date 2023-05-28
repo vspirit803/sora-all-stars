@@ -48,7 +48,7 @@ watchEffect(() => {
         {
           duration: 1000,
           easing: "ease-in-out",
-        }
+        },
       ).addEventListener("finish", () => {
         dmgNumber.remove();
       });
@@ -66,7 +66,7 @@ watchEffect(() => {
         {
           duration: 300,
           easing: "ease-in-out",
-        }
+        },
       );
     }
   });
@@ -92,7 +92,7 @@ watchEffect(() => {
         {
           duration: 1000,
           easing: "ease-in-out",
-        }
+        },
       ).addEventListener("finish", () => {
         healNumber.remove();
       });
@@ -110,7 +110,7 @@ watchEffect(() => {
         {
           duration: 300,
           easing: "ease-in-out",
-        }
+        },
       );
     }
   });
@@ -141,7 +141,7 @@ watchEffect(() => {
         {
           duration: ACTION_DELAY * 0.6,
           easing: "ease-in-out",
-        }
+        },
       );
 
       setTimeout(() => {

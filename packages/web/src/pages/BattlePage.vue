@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Battle, BattleEventType, BattleResult } from "@sora-all-stars/core";
+import { Battle, BattleEventType, BattleResult, type IActionEndEventData, type IDamagedEventData, type IHealedEventData, type ITurnEndEventData, type ITurnStartEventData, sleep } from "@sora-all-stars/core";
 import { onBeforeUnmount, type Ref, ref, shallowRef } from "vue";
 
 import { ACTION_DELAY } from "../constants";
@@ -24,8 +24,90 @@ const battleRound: Ref<number> = ref(0);
 const battleStat: Ref<Record<string, { damage: number; damaged: number, heal: number }>> = ref({});
 const battle = shallowRef<Battle | null>(null);
 
+function turnStartHandler(data: ITurnStartEventData) {
+  battleRound.value = data.turn;
+  console.log(`==========第 ${data.turn} 回合开始==========`);
+}
+
+function turnEndHandler(data: ITurnEndEventData) {
+  console.log(`==========第 ${data.turn} 回合结束==========`);
+}
+
+function damagedHandler(data: IDamagedEventData) {
+  if (!battleUI.value) {
+    return;
+  }
+
+  const character = battleUI.value.teams.flat().find((each) => each.uuid === data.target.uuid);
+
+  if (!character) {
+    return;
+  }
+
+  const attacker = data.source.name;
+  const target = data.target.name;
+
+  if (!battleStat.value[attacker]) {
+    battleStat.value[attacker] = {
+      damage: 0,
+      damaged: 0,
+      heal: 0,
+    };
+  }
+
+  if (!battleStat.value[target]) {
+    battleStat.value[target] = {
+      damage: 0,
+      damaged: 0,
+      heal: 0,
+    };
+  }
+
+  battleStat.value[attacker].damage += data.realDamage;
+  battleStat.value[target].damaged += data.realDamage;
+
+  character.currHP -= data.realDamage;
+}
+
+function healedHandler(data: IHealedEventData) {
+  if (!battleUI.value) {
+    return;
+  }
+
+  const character = battleUI.value.teams.flat().find((each) => each.uuid === data.target.uuid);
+
+  if (!character) {
+    return;
+  }
+
+  const healer = data.source.name;
+
+  if (!battleStat.value[healer]) {
+    battleStat.value[healer] = {
+      damage: 0,
+      damaged: 0,
+      heal: 0,
+    };
+  }
+
+  battleStat.value[healer].heal += data.realHealValue;
+
+  character.currHP += data.realHealValue;
+}
+
+async function actionEndHandler(data: IActionEndEventData) {
+  await sleep(ACTION_DELAY);
+}
+
 function start() {
-  battle.value?.cancel();
+  if (battle.value) {
+    battle.value.removeListener(BattleEventType.TURN_START, turnStartHandler);
+    battle.value.removeListener(BattleEventType.TURN_END, turnEndHandler);
+    battle.value.removeListener(BattleEventType.DAMAGED, damagedHandler);
+    battle.value.removeListener(BattleEventType.HEALED, healedHandler);
+    battle.value.removeListener(BattleEventType.ACTION_END, actionEndHandler);
+    battle.value.cancel();
+  }
   console.clear();
 
   const currBattle = battle.value = Battle.generateBattle();
@@ -44,92 +126,23 @@ function start() {
   battleRound.value = 0;
   battleStat.value = {};
 
-  currBattle.listen(BattleEventType.TURN_START, (data) => {
-    battleRound.value = data.turn;
-    console.log(`==========第 ${data.turn} 回合开始==========`);
-  });
+  currBattle.listen(BattleEventType.TURN_START, turnStartHandler);
+  currBattle.listen(BattleEventType.TURN_END, turnEndHandler);
+  currBattle.listen(BattleEventType.DAMAGED, damagedHandler);
+  currBattle.listen(BattleEventType.HEALED, healedHandler);
+  currBattle.listen(BattleEventType.ACTION_END, actionEndHandler);
 
-  currBattle.listen(BattleEventType.TURN_END, (data) => {
-    console.log(`==========第 ${data.turn} 回合结束==========`);
-  });
-
-  currBattle.listen(BattleEventType.DAMAGED, (data) => {
-    if (!battleUI.value) {
-      return;
-    }
-
-    const character = battleUI.value.teams.flat().find((each) => each.uuid === data.target.uuid);
-
-    if (!character) {
-      return;
-    }
-
-    const attacker = data.source.name;
-    const target = data.target.name;
-
-    if (!battleStat.value[attacker]) {
-      battleStat.value[attacker] = {
-        damage: 0,
-        damaged: 0,
-        heal: 0,
-      };
-    }
-
-    if (!battleStat.value[target]) {
-      battleStat.value[target] = {
-        damage: 0,
-        damaged: 0,
-        heal: 0,
-      };
-    }
-
-    battleStat.value[attacker].damage += data.realDamage;
-    battleStat.value[target].damaged += data.realDamage;
-
-    character.currHP -= data.realDamage;
-  });
-
-  currBattle.listen(BattleEventType.HEALED, (data) => {
-    if (!battleUI.value) {
-      return;
-    }
-
-    const character = battleUI.value.teams.flat().find((each) => each.uuid === data.target.uuid);
-
-    if (!character) {
-      return;
-    }
-
-    const healer = data.source.name;
-
-    if (!battleStat.value[healer]) {
-      battleStat.value[healer] = {
-        damage: 0,
-        damaged: 0,
-        heal: 0,
-      };
-    }
-
-    battleStat.value[healer].heal += data.realHealValue;
-
-    character.currHP += data.realHealValue;
-  });
-
-  currBattle.listen(BattleEventType.ACTION_END, async (data) => {
-    await new Promise((resolve) => setTimeout(resolve, ACTION_DELAY));
-  });
-
-  currBattle.execute().then((result) => {
+  void currBattle.execute().then((result) => {
     if (result === BattleResult.WIN) {
       console.log(`==========经过 ${currBattle.turn} 回合, 战斗胜利==========`);
+      battle.value = null;
     } else if (result === BattleResult.LOSE) {
       console.log(`==========经过 ${currBattle.turn} 回合, 战斗失败==========`);
+      battle.value = null;
     } else if (result === BattleResult.CANCEL) {
       console.log("战斗被取消了");
     }
-
-    battle.value = null;
-  }, () => void 0);
+  });
 }
 
 onBeforeUnmount(() => {

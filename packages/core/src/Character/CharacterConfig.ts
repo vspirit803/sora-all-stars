@@ -1,5 +1,6 @@
+import { Rarity } from "@core/Rarity";
 import { Transform, Type } from "class-transformer";
-import { IsNumber, IsNumberString, IsString, Length, ValidateNested } from "class-validator";
+import { IsEnum, IsNumber, IsNumberString, IsString, Length, ValidateNested } from "class-validator";
 
 export class CharacterSinglePropertyConfig {
   @Transform(({ value }: { value: string }) => parseInt(value, 10))
@@ -40,6 +41,9 @@ export class CharacterConfig {
 
   @IsString()
   name!: string;
+
+  @IsEnum(Rarity)
+  rarity!: Rarity;
 
   @IsString()
   gender!: string;
