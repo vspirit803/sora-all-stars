@@ -8,13 +8,12 @@ module.exports = {
   root: true,
   parserOptions: {
     parser: "@typescript-eslint/parser",
-    ecmaVersion: 6,
+    ecmaVersion: "latest",
     sourceType: "module",
     ecmaFeatures: {
       experimentalObjectRestSpread: true,
       modules: true,
     },
-    // project: "tsconfig.json", // eslint规则
   },
   env: {
     browser: true,
@@ -165,7 +164,7 @@ module.exports = {
         "keyword-spacing": "off",
         "@typescript-eslint/keyword-spacing": "error",
         "space-before-function-paren": "off",
-        "@typescript-eslint/space-before-function-paren": ["error", {"anonymous": "always", "named": "never", "asyncArrow": "always"}],
+        "@typescript-eslint/space-before-function-paren": ["error", { "anonymous": "always", "named": "never", "asyncArrow": "always" }],
         "padding-line-between-statements": "off",
         "@typescript-eslint/padding-line-between-statements":
           "error",
