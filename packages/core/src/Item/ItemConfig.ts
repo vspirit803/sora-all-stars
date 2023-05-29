@@ -1,3 +1,4 @@
+import { Rarity } from "@core/Rarity";
 import { IsEnum, IsNumberString, IsString, Length } from "class-validator";
 
 import { ItemType } from "./ItemType";
@@ -16,4 +17,7 @@ export class ItemConfig {
 
   @IsString()
   description!: string;
+
+  @IsEnum(Rarity)
+  rarity!: Rarity;
 }

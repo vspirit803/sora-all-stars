@@ -84,9 +84,9 @@ button:focus-visible {
 }
 
 :root {
-  --color-rarity-normal: rgb(204, 204, 204);
-  --color-rarity-rare: green;
-  --color-rarity-legendary: rgb(109, 158, 235);
-  --color-rarity-epic: rgb(154, 0, 255);
-  --color-rarity-mythic: rgb(230, 145, 55);
+  --color-rarity-normal: linear-gradient(rgb(62, 65, 79), rgb(129, 129, 137));
+  --color-rarity-rare: linear-gradient(rgb(56, 72, 100), rgb(64, 127, 128));
+  --color-rarity-legendary: linear-gradient(rgb(58, 60, 100), rgb(71, 118, 180));
+  --color-rarity-epic: linear-gradient(rgb(63, 64, 100), rgb(147, 97, 204));
+  --color-rarity-mythic: linear-gradient(rgb(135 ,85, 78), rgb(196, 160, 109))
 }

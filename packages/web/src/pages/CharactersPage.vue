@@ -5,6 +5,7 @@ import { type CharacterConfig, CharacterConfigManager, type CharacterPropertyCon
 import { type Ref, ref } from "vue";
 
 import FallbackImage from "../components/FallbackImage.vue";
+import RarityItemUI from "../components/RarityItemUI.vue";
 
 const game = Game.instance;
 
@@ -36,28 +37,16 @@ const ICON_MAP: Record<keyof CharacterPropertyConfig, IconConfig> = {
 <template>
   <div class="character-page">
     <div class="character-list">
-      <div
+      <RarityItem
         v-for="each of characterConfigs"
         :key="each.id"
         class="character-list__item"
-        :class="{
-          'character-list__item--selected': each.id === selectedCharacterConfig.id,
-          ['character-list__item--' + each.rarity]: true,
-        // 'character-list__item--lock': !charactersMap.has(each.id),
-        }"
+        :text="each.name"
+        :rarity="each.rarity"
+        :selected="each.id === selectedCharacterConfig.id"
+        :img-url="`/images/character/avatar/${each.id}.png`"
         @click="() => clickHandler(each)"
-      >
-        <FallbackImage
-          draggable="false"
-          class="character-list__item-image"
-          :src="`/images/character/avatar/${each.id}.png`"
-          alt="/vite.svg"
-        />
-        <!-- <div class="character-list__item-inner-line" /> -->
-        <div class="character-list__item-name">
-          {{ each.name }}
-        </div>
-      </div>
+      />
     </div>
     <div class="character-detail">
       <template v-if="selectedCharacterConfig">
@@ -119,96 +108,13 @@ const ICON_MAP: Record<keyof CharacterPropertyConfig, IconConfig> = {
 
   &-list {
     overflow: auto;
-
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    align-content: start;
+    display: flex;
+    flex-wrap: wrap;
     padding: 16px;
     gap: 16px;
 
     &__item {
-      border-radius: 0 16px 0 0;
-      position: relative;
-      transition: all 0.1s ease-in-out;
-      overflow: hidden;
-
-      &--Normal {
-        .character-list__item-image {
-          background-color: var(--color-rarity-normal);
-        }
-      }
-
-      &--Rare {
-        .character-list__item-image {
-          background-color: var(--color-rarity-rare);
-        }
-      }
-
-      &--Legendary {
-        .character-list__item-image {
-
-          background-color: var(--color-rarity-legendary);
-        }
-      }
-
-      &--Epic {
-        .character-list__item-image {
-          background-color: var(--color-rarity-epic);
-        }
-      }
-
-      &--Mythic {
-        .character-list__item-image {
-          background-color: var(--color-rarity-mythic);
-        }
-      }
-
-      &:hover {
-        outline: 4px solid white;
-      }
-
-      &--selected {
-        outline: 4px solid white;
-        transform: scale(1.05);
-      }
-
-      &--lock {
-        pointer-events: none;
-
-        /* ^&-image */
-        .character-list__item-image {
-          filter: blur(4px);
-        }
-
-        &::after {
-          content: "🔒";
-          position: absolute;
-          top: 50%;
-          left: 50%;
-          transform: translate(-50%, -50%);
-          font-size: 48px;
-          font-weight: bold;
-        }
-      }
-
-      &-image {
-        aspect-ratio: 1 / 1;
-        width: 100%;
-        /* height: 100%; */
-        object-fit: cover;
-        display: block;
-      }
-
-      &-inner-line {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: calc(100% - 16px);
-        height: 100%;
-        margin: 8px 8px 0;
-        border-radius: 0 16px 0 0;
-        outline: 2px rgba(127, 127, 127, 0.5) solid;
-      }
+      width: calc((100% - 64px) / 5);
     }
   }
 
@@ -290,8 +196,10 @@ const ICON_MAP: Record<keyof CharacterPropertyConfig, IconConfig> = {
       gap: 8px;
 
       .skill-item {
+
+        aspect-ratio: 1 / 1;
         width: 100%;
-        height: 100%;
+        /* height: 100%; */
         display: flex;
         align-items: center;
         justify-content: center;

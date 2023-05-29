@@ -810,5 +810,104 @@
     "defaultSkills": [
       "600000"
     ]
+  },
+  {
+    "id": "000025",
+    "name": "张三",
+    "gender": "M",
+    "rarity": "Normal",
+    "source": "占位置",
+    "description": "",
+    "properties": {
+      "ATK": {
+        "base": "120",
+        "growth": "20"
+      },
+      "DEF": {
+        "base": "100",
+        "growth": "10"
+      },
+      "HP": {
+        "base": "100",
+        "growth": "50"
+      },
+      "MP": {
+        "base": "100",
+        "growth": "10"
+      },
+      "SPD": {
+        "base": "100",
+        "growth": "0"
+      }
+    },
+    "defaultSkills": [
+      "600000"
+    ]
+  },
+  {
+    "id": "000026",
+    "name": "李四",
+    "gender": "M",
+    "rarity": "Normal",
+    "source": "占位置",
+    "description": "",
+    "properties": {
+      "ATK": {
+        "base": "120",
+        "growth": "20"
+      },
+      "DEF": {
+        "base": "100",
+        "growth": "10"
+      },
+      "HP": {
+        "base": "100",
+        "growth": "50"
+      },
+      "MP": {
+        "base": "100",
+        "growth": "10"
+      },
+      "SPD": {
+        "base": "100",
+        "growth": "0"
+      }
+    },
+    "defaultSkills": [
+      "600000"
+    ]
+  },
+  {
+    "id": "000027",
+    "name": "王麻子",
+    "gender": "M",
+    "rarity": "Normal",
+    "source": "占位置",
+    "description": "",
+    "properties": {
+      "ATK": {
+        "base": "120",
+        "growth": "20"
+      },
+      "DEF": {
+        "base": "100",
+        "growth": "10"
+      },
+      "HP": {
+        "base": "100",
+        "growth": "50"
+      },
+      "MP": {
+        "base": "100",
+        "growth": "10"
+      },
+      "SPD": {
+        "base": "100",
+        "growth": "0"
+      }
+    },
+    "defaultSkills": [
+      "600000"
+    ]
   }
 ]

@@ -1,14 +1,16 @@
 <script setup lang="ts">
 import SvgIcon from "@jamescoyle/vue-icon";
 import { mdiHomeCircle } from "@mdi/js";
-import { Game, ItemType, MaterialItem } from "@sora-all-stars/core";
+import { EquipmentItem, Game, ItemType, MaterialItem } from "@sora-all-stars/core";
 import { computed, ref } from "vue";
 import { useRouter } from "vue-router";
 
+import MaterialItemUI from "./MaterialItemUI.vue";
+
 const game = Game.instance;
 const items = game.items;
-const equipments = items.filter((item) => item.type === ItemType.Equipment);
-const materials = items.filter((item) => item.type === ItemType.Material);
+const equipments = items.filter((item) => item instanceof EquipmentItem) as EquipmentItem[];
+const materials = items.filter((item) => item instanceof MaterialItem) as MaterialItem[];
 
 const selTab = ref(ItemType.Equipment);
 const router = useRouter();
@@ -52,11 +54,29 @@ const selTabItems = computed(() => {
       </div>
     </div>
     <div class="backpack__body">
-      <div v-for="i of 40" :key="i - 1 < selTabItems.length ? selTabItems[i - 1].id : undefined" class="backpack__item">
-        <template v-if="i - 1 < selTabItems.length">
-          {{ selTabItems[i - 1].name }} {{ selTabItems[i - 1] instanceof MaterialItem ? selTabItems[i - 1].count : "" }}
-        </template>
-      </div>
+      <template v-if="selTab === ItemType.Equipment">
+        <div v-for="i of 40" :key="i - 1 < selTabItems.length ? equipments[i - 1].id : undefined" class="backpack__item">
+          <template v-if="i - 1 < equipments.length">
+            {{ equipments[i - 1].name }}
+            <!-- <RarityItemUI
+              :rarity="equipments[i - 1].rarity"
+              :img-url="`/images/equipment/${equipments[i - 1].id}.png`"
+              :text="equipments[i - 1].name"
+              :selected="false"
+            /> -->
+          </template>
+        </div>
+      </template>
+      <template v-else-if="selTab === ItemType.Material">
+        <div v-for="i of 40" :key="i - 1 < selTabItems.length ? materials[i - 1].id : undefined" class="backpack__item">
+          <template v-if="i - 1 < materials.length">
+            <MaterialItemUI
+              :item="materials[i - 1]"
+              :selected="false"
+            />
+          </template>
+        </div>
+      </template>
     </div>
   </div>
 </template>
@@ -105,8 +125,8 @@ const selTabItems = computed(() => {
 
     &__item {
       width: 100px;
-      height: 100px;
-      border: 1px solid #000;
+      /* height: 100px; */
+      /* border: 1px solid #000; */
       margin: 10px;
     }
   }
