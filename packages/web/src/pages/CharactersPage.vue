@@ -37,14 +37,14 @@ const ICON_MAP: Record<keyof CharacterPropertyConfig, IconConfig> = {
 <template>
   <div class="character-page">
     <div class="character-list">
-      <RarityItem
+      <RarityItemUI
         v-for="each of characterConfigs"
         :key="each.id"
         class="character-list__item"
         :text="each.name"
         :rarity="each.rarity"
         :selected="each.id === selectedCharacterConfig.id"
-        :img-url="`/images/character/avatar/${each.id}.png`"
+        :img-url="`/images/character/avatar/${each.id}.webp`"
         @click="() => clickHandler(each)"
       />
     </div>

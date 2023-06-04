@@ -175,7 +175,7 @@ watchEffect(() => {
     </v-progress-linear>
     <FallbackImage
       class="battle-character__image"
-      :src="`/images/character/avatar/${character.id}.png`"
+      :src="`/images/character/avatar/${character.id}.webp`"
       alt="/vite.svg"
     />
   </div>

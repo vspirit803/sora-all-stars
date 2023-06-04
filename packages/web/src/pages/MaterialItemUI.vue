@@ -5,7 +5,7 @@ import RarityItemUI from "../components/RarityItemUI.vue";
 
 const props = defineProps<{
   item: MaterialItem;
-  selected: boolean;
+  selected?: boolean;
 }>();
 </script>
 <template>
@@ -13,7 +13,7 @@ const props = defineProps<{
     class="material-item"
     :text="`${props.item.name} ${props.item.count}`"
     :rarity="props.item.rarity"
-    :img-url="`/images/material/${props.item.id}.png`"
+    :img-url="`/images/items/${props.item.id}_${props.item.name}.webp`"
     :selected="props.selected"
   />
 </template>
