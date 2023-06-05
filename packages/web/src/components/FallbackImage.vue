@@ -1,10 +1,14 @@
 <script setup lang="ts">
 import { ref, watchEffect } from "vue";
 
-const props = defineProps<{
+const props = withDefaults( defineProps<{
   src: string;
-  alt: string;
-}>();
+  alt?: string;
+  aspectRatio?: number;
+}>(), {
+  alt: "/vite.svg",
+  aspectRatio: 1,
+});
 
 const srcValid = ref(false);
 
@@ -20,5 +24,17 @@ watchEffect(() => {
 
 </script>
 <template>
-  <img :src="srcValid ? src : alt">
+  <div>
+    <div style="position: relative; width: 100%; height: 100%;">
+      <v-img
+        :src="src"
+        :aspect-ratio="aspectRatio"
+        cover
+      >
+        <template #error>
+          <img :src="alt" style="width: 100%; height: 100%;">
+        </template>
+      </v-img>
+    </div>
+  </div>
 </template>

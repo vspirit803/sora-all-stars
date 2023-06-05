@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import SvgIcon from "@jamescoyle/vue-icon";
 import { mdiFlaskEmpty, mdiFlaskRoundBottomEmpty, mdiShield, mdiShoeFormal, mdiSword } from "@mdi/js";
 import { type CharacterConfig, CharacterConfigManager, type CharacterPropertyConfig, Game, SkillConfigManager } from "@sora-all-stars/core";
 import { type Ref, ref } from "vue";
@@ -58,7 +57,7 @@ const ICON_MAP: Record<keyof CharacterPropertyConfig, IconConfig> = {
             draggable="false"
             class="character-detail__image-tachie"
             :src="`/images/character/tachie/${selectedCharacterConfig.id}.webp`"
-            alt="/vite.svg"
+            :aspect-ratio="2 / 3"
           />
         </div>
         <div class="character-detail__source">
@@ -67,11 +66,11 @@ const ICON_MAP: Record<keyof CharacterPropertyConfig, IconConfig> = {
         <div class="character-detail__property">
           <template v-for="(propConfig, propName) in selectedCharacterConfig.properties" :key="propName">
             <div class="property-item__name">
-              <SvgIcon
+              <v-icon
                 class="property-item__name-icon"
-                type="mdi"
-                :path="ICON_MAP[propName].path"
-                :style="{ color: ICON_MAP[propName].color }"
+                :color=" ICON_MAP[propName].color"
+                :icon="ICON_MAP[propName].path"
+                :size="36"
               />
               <span>{{ propName }}</span>
             </div>

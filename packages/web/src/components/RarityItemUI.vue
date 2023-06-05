@@ -3,12 +3,14 @@ import { type Rarity } from "@sora-all-stars/core";
 
 import FallbackImage from "../components/FallbackImage.vue";
 
-const props = defineProps<{
+const props = withDefaults(defineProps<{
   imgUrl: string;
   text: string;
   rarity: Rarity;
-  selected: boolean;
-}>();
+  selected?: boolean;
+}>(), {
+  selected: false,
+});
 </script>
 <template>
   <div
@@ -22,10 +24,9 @@ const props = defineProps<{
       draggable="false"
       class="rarity-item-image"
       :src="props.imgUrl"
-      alt="/vite.svg"
     />
     <div class="rarity-item-inner" />
-    <div class="rarity-item-name">
+    <div class="rarity-item-text">
       {{ props.text }}
     </div>
   </div>
@@ -94,9 +95,10 @@ const props = defineProps<{
     display: block;
   }
 
-  &-name {
+  &-text {
     margin-top: 100%;
     background: rgb(35, 35, 35);
+    color: white;
     margin-bottom: 2px;
   }
 

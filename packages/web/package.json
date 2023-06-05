@@ -9,7 +9,6 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@jamescoyle/vue-icon": "^0.1.2",
     "@mdi/js": "^7.2.96",
     "@sora-all-stars/assets": "workspace:^",
     "@sora-all-stars/core": "workspace:^",

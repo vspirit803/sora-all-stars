@@ -57,7 +57,6 @@ function save() {
   min-width: 1600px;
   max-width: 1600px;
   user-select: none;
-
   aspect-ratio: 16 / 9;
   background-color: #242424;
 

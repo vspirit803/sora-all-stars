@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import SvgIcon from "@jamescoyle/vue-icon";
-import { mdiHomeCircle } from "@mdi/js";
+import { mdiBagPersonal, mdiHomeCircle } from "@mdi/js";
 import { EquipmentItem, Game, ItemType, MaterialItem } from "@sora-all-stars/core";
-import { computed, ref } from "vue";
+import { ref } from "vue";
 import { useRouter } from "vue-router";
 
+import RarityItemUI from "../components/RarityItemUI.vue";
 import MaterialItemUI from "./MaterialItemUI.vue";
 
 const game = Game.instance;
@@ -14,70 +14,69 @@ const materials = items.filter((item) => item instanceof MaterialItem) as Materi
 
 const selTab = ref(ItemType.Equipment);
 const router = useRouter();
-
-const selTabItems = computed(() => {
-  switch (selTab.value) {
-  case ItemType.Equipment:
-    return equipments;
-  case ItemType.Material:
-    return materials;
-  default:
-    return [];
-  }
-});
 </script>
 <template>
   <div class="page-backpack">
     <div class="backpack__toolbar">
-      <SvgIcon
-        type="mdi"
-        :path="mdiHomeCircle"
+      <v-chip
+        variant="text"
+      >
+        <template #prepend>
+          <v-icon
+            color="white"
+            :icon="mdiBagPersonal"
+            :size="36"
+          />
+        </template>
+        背包
+      </v-chip>
+      <v-tabs
+        v-model="selTab"
+        bg-color="transparent"
+        class="backpack__tabs"
+        align-tabs="center"
+      >
+        <v-tab :value="ItemType.Equipment">
+          装备
+        </v-tab>
+        <v-tab :value="ItemType.Material">
+          材料
+        </v-tab>
+      </v-tabs>
+      <v-icon
+        color="white"
+        :icon="mdiHomeCircle"
         :size="36"
         class="backpack__toolbar--icon"
         @click="() => router.push('/')"
       />
     </div>
-    <div class="backpack__tabs">
-      <div
-        class="tab__item"
-        :class="{ 'tab__item--selected': selTab === ItemType.Equipment }"
-        @click="selTab = ItemType.Equipment"
-      >
-        装备
-      </div>
-      <div
-        class="tab__item"
-        :class="{ 'tab__item--selected': selTab === ItemType.Material }"
-        @click="selTab = ItemType.Material"
-      >
-        材料
-      </div>
-    </div>
-    <div class="backpack__body">
-      <template v-if="selTab === ItemType.Equipment">
-        <div v-for="i of 40" :key="i - 1 < selTabItems.length ? equipments[i - 1].id : undefined" class="backpack__item">
-          <template v-if="i - 1 < equipments.length">
-            {{ equipments[i - 1].name }}
-            <!-- <RarityItemUI
-              :rarity="equipments[i - 1].rarity"
-              :img-url="`/images/equipment/${equipments[i - 1].id}.png`"
-              :text="equipments[i - 1].name"
-              :selected="false"
-            /> -->
-          </template>
+    <v-window v-model="selTab">
+      <v-window-item :value="ItemType.Equipment" class="backpack__body">
+        <div
+          v-for="i of 40"
+          :key="i - 1 < equipments.length ? equipments[i - 1].id : undefined"
+          class="backpack__item"
+        >
+          <RarityItemUI
+            v-if="i - 1 < equipments.length"
+            :rarity="equipments[i - 1].rarity"
+            :img-url="`/images/items/${equipments[i - 1].id}_${equipments[i - 1].name}.webp`"
+            :text="equipments[i - 1].name"
+            :selected="false"
+          />
         </div>
-      </template>
-      <template v-else-if="selTab === ItemType.Material">
-        <div v-for="i of 40" :key="i - 1 < selTabItems.length ? materials[i - 1].id : undefined" class="backpack__item">
+      </v-window-item>
+      <v-window-item :value="ItemType.Material" class="backpack__body">
+        <div v-for="i of 40" :key="i - 1 < materials.length ? materials[i - 1].id : undefined" class="backpack__item">
           <template v-if="i - 1 < materials.length">
             <MaterialItemUI
               :item="materials[i - 1]"
-              :selected="false"
             />
           </template>
         </div>
-      </template>
-    </div>
+      </v-window-item>
+    </v-window>
   </div>
 </template>
 <style lang="postcss" scoped>
@@ -108,6 +107,7 @@ const selTabItems = computed(() => {
 
     &__tabs {
       display: flex;
+      flex-grow: 1;
       flex-direction: row;
       justify-content: center;
       align-items: center;
