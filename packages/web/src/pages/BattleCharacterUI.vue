@@ -139,7 +139,7 @@ watchEffect(() => {
           },
         ],
         {
-          duration: ACTION_DELAY * 0.6,
+          duration: 200,
           easing: "ease-in-out",
         },
       );

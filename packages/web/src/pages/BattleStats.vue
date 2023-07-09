@@ -16,7 +16,7 @@ import { provide, ref, watch } from "vue";
 import VChart, { THEME_KEY } from "vue-echarts";
 
 const props = defineProps<{
-  battleStats: Record<string, { damage: number; damaged: number, heal: number }>;
+  battleStats: Record<string, { damage: number; damaged: number, heal: number, roundCount: number }>;
 }>();
 
 use([
@@ -35,11 +35,11 @@ const option = ref({
   legend: {},
   tooltip: {},
   dataset: {
-    source:[["角色", "造成伤害", "承受伤害", "治疗量"]] as Array<Array<string | number>>,
+    source:[["角色", "造成伤害", "承受伤害", "治疗量", "行动次数"]] as Array<Array<string | number>>,
   },
   xAxis: { type: "category" },
   yAxis: {},
-  series: [{ type: "bar" }, { type: "bar" }, { type: "bar" }],
+  series: [{ type: "bar" }, { type: "bar" }, { type: "bar" }, { type: "bar" }],
 });
 
 const throottle = (fn: () => void, delay: number, immediate = false) => {
@@ -61,11 +61,11 @@ const throottle = (fn: () => void, delay: number, immediate = false) => {
 
 const updateOption = throottle(() => {
   const data = Object.entries(props.battleStats).map(([name, stats]) => {
-    return [name, stats.damage, stats.damaged, stats.heal];
+    return [name, stats.damage, stats.damaged, stats.heal, stats.roundCount];
   });
 
   option.value.dataset.source = [
-    ["角色", "造成伤害", "承受伤害", "治疗量"],
+    ["角色", "造成伤害", "承受伤害", "治疗量", "行动次数"],
     ...data,
   ];
 }, 500, true);

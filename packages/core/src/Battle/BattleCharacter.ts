@@ -1,3 +1,5 @@
+import { type BattleBuff } from "@core/Buff";
+
 import { type Battle, type BattleTeam } from "./Battle";
 import { BattleEventType, type IHealedEventData } from "./BattleEvent";
 import { type IBattleObject, IBattleObjectDefaultImplement } from "./IBattleObject";
@@ -22,6 +24,7 @@ export class BattleCharacter implements IBattleObject {
 
   currHP: number;
   currMP: number;
+  buffs: BattleBuff[];
 
   isStunned: boolean;
   isSilenced: boolean;
@@ -49,6 +52,7 @@ export class BattleCharacter implements IBattleObject {
 
     this.currHP = 0;
     this.currMP = 0;
+    this.buffs = [];
 
     this.isStunned = false;
     this.isSilenced = false;

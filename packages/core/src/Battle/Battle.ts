@@ -1,3 +1,6 @@
+import { type UUID } from "@core/base";
+
+import { type AbstractBattleActionManager } from "./AbstractBattleActionManager";
 import { BattleCharacter } from "./BattleCharacter";
 import {
   BattleEventType,
@@ -15,6 +18,7 @@ import {
 } from "./BattleEvent";
 import { type IActionStartEventData } from "./BattleEvent/ActionStartEvent";
 import { BattleSkill } from "./BattleSkill";
+import { DynamicBattleActionManager } from "./DynamicBattleActionManager";
 import { type IBattleObject } from "./IBattleObject";
 import { type IBattleSkill, type SkillCast } from "./IBattleSkill";
 import { SkillCasts } from "./SkillCasts";
@@ -27,9 +31,12 @@ export enum BattleResult {
   CANCEL,
 }
 
+type EventID = UUID;
+
 export class Battle {
   name: string;
   teams: [BattleTeam, BattleTeam];
+  battleActionManager: AbstractBattleActionManager;
 
   turn: number;
   thisTurn: IBattleObject[];
@@ -46,6 +53,7 @@ export class Battle {
     this.listeners = [];
 
     this.#canceled = false;
+    this.battleActionManager = new DynamicBattleActionManager(this, this.teams);
   }
 
   isFinished(): boolean {
@@ -88,31 +96,32 @@ export class Battle {
   }
 
   async getNextActionObject(): Promise<IBattleObject> {
-    if (this.thisTurn.length === 0) {
-      this.thisTurn = this.teams
-        .flatMap(team => team)
-        .filter(obj => obj.isAlive)
-        .sort((a, b) => b.spd - a.spd);
+    return Promise.resolve(this.battleActionManager.getNextActionObject());
+    // if (this.thisTurn.length === 0) {
+    //   this.thisTurn = this.teams
+    //     .flatMap(team => team)
+    //     .filter(obj => obj.isAlive)
+    //     .sort((a, b) => b.spd - a.spd);
 
-      if (this.turn > 0) {
-        await this.dispatch(BattleEventType.TURN_END, { type: BattleEventType.TURN_END, turn: this.turn });
-      }
+    //   if (this.turn > 0) {
+    //     await this.dispatch(BattleEventType.TURN_END, { type: BattleEventType.TURN_END, turn: this.turn });
+    //   }
 
-      this.turn += 1;
-      await this.dispatch(BattleEventType.TURN_START, { type: BattleEventType.TURN_START, turn: this.turn });
-    }
+    //   this.turn += 1;
+    //   await this.dispatch(BattleEventType.TURN_START, { type: BattleEventType.TURN_START, turn: this.turn });
+    // }
 
-    const curr = this.thisTurn.shift();
+    // const curr = this.thisTurn.shift();
 
-    if (!curr) {
-      throw new Error("No action object in this turn.");
-    }
+    // if (!curr) {
+    //   throw new Error("No action object in this turn.");
+    // }
 
-    if (curr.isDead) {
-      return this.getNextActionObject();
-    }
+    // if (curr.isDead) {
+    //   return this.getNextActionObject();
+    // }
 
-    return curr;
+    // return curr;
   }
 
   static generateBattle() {
@@ -128,7 +137,7 @@ export class Battle {
     织田信长.currHP = 1000;
     织田信长.atk = 110;
     织田信长.def = 30;
-    织田信长.spd = 100;
+    织田信长.spd = 105;
     织田信长.critRate = 0.2;
     织田信长.critDmg = 1.8;
     const 斩击 = new BattleSkill("000001", "斩击", 织田信长, SkillCasts.斩击.cast, SkillCasts.斩击.getPriority);
@@ -141,7 +150,7 @@ export class Battle {
     羽柴秀吉.currHP = 1000;
     羽柴秀吉.atk = 100;
     羽柴秀吉.def = 20;
-    羽柴秀吉.spd = 120;
+    羽柴秀吉.spd = 220;
     羽柴秀吉.critRate = 0.1;
     羽柴秀吉.critDmg = 1.5;
     羽柴秀吉.skills.push(this.generateSkill(羽柴秀吉));
@@ -153,7 +162,7 @@ export class Battle {
     德川家康.currHP = 1500;
     德川家康.atk = 80;
     德川家康.def = 80;
-    德川家康.spd = 80;
+    德川家康.spd = 85;
     德川家康.critRate = 0.05;
     德川家康.critDmg = 1.2;
     德川家康.skills.push(this.generateSkill(德川家康));
@@ -171,6 +180,8 @@ export class Battle {
     钟离.critRate = 0.05;
     钟离.critDmg = 1.2;
     钟离.skills.push(this.generateSkill(钟离));
+    const 玉璋护盾 = new BattleSkill("000004", "玉璋护盾", 钟离, SkillCasts.玉璋护盾.cast, SkillCasts.玉璋护盾.getPriority, SkillCasts.玉璋护盾.getTarget);
+    钟离.skills.push(玉璋护盾);
 
     battle.listen(BattleEventType.DAMAGED, async (data) => {
       if (data.target !== 钟离) {
@@ -188,100 +199,127 @@ export class Battle {
     雷电将军.currHP = 1000;
     雷电将军.atk = 180;
     雷电将军.def = 50;
-    雷电将军.spd = 100;
+    雷电将军.spd = 95;
     雷电将军.critRate = 0.15;
     雷电将军.critDmg = 1.8;
     const 无想的一刀 = new BattleSkill("000003", "无想的一刀", 雷电将军, SkillCasts.无想的一刀.cast, SkillCasts.无想的一刀.getPriority);
     雷电将军.skills.push(this.generateSkill(雷电将军), 无想的一刀);
 
-    const 斧王1 = new BattleCharacter(battle, team2);
-    斧王1.id = "000002";
-    斧王1.name = "斧王1";
-    斧王1.hp = 1000;
-    斧王1.currHP = 1000;
-    斧王1.atk = 150;
-    斧王1.def = 50;
-    斧王1.spd = 80;
-    斧王1.critRate = 0.05;
-    斧王1.critDmg = 1.5;
-    斧王1.skills.push(this.generateSkill(斧王1));
+    // const 斧王1 = new BattleCharacter(battle, team2);
+    // 斧王1.id = "000002";
+    // 斧王1.name = "斧王1";
+    // 斧王1.hp = 1000;
+    // 斧王1.currHP = 1000;
+    // 斧王1.atk = 150;
+    // 斧王1.def = 50;
+    // 斧王1.spd = 80;
+    // 斧王1.critRate = 0.05;
+    // 斧王1.critDmg = 1.5;
+    // 斧王1.skills.push(this.generateSkill(斧王1));
 
-    const 斧王2 = new BattleCharacter(battle, team2);
-    斧王2.id = "000002";
-    斧王2.name = "斧王2";
-    斧王2.hp = 1500;
-    斧王2.currHP = 1500;
-    斧王2.atk = 150;
-    斧王2.def = 50;
-    斧王2.spd = 80;
-    斧王2.critRate = 0.05;
-    斧王2.critDmg = 1.5;
-    斧王2.skills.push(this.generateSkill(斧王2));
+    // const 斧王2 = new BattleCharacter(battle, team2);
+    // 斧王2.id = "000002";
+    // 斧王2.name = "斧王2";
+    // 斧王2.hp = 1500;
+    // 斧王2.currHP = 1500;
+    // 斧王2.atk = 150;
+    // 斧王2.def = 50;
+    // 斧王2.spd = 80;
+    // 斧王2.critRate = 0.05;
+    // 斧王2.critDmg = 1.5;
+    // 斧王2.skills.push(this.generateSkill(斧王2));
 
-    const 斧王3 = new BattleCharacter(battle, team2);
-    斧王3.id = "000002";
-    斧王3.name = "斧王3";
-    斧王3.hp = 2000;
-    斧王3.currHP = 2000;
-    斧王3.atk = 200;
-    斧王3.def = 50;
-    斧王3.spd = 80;
-    斧王3.critRate = 0.05;
-    斧王3.critDmg = 1.5;
-    斧王3.skills.push(this.generateSkill(斧王3));
+    // const 斧王3 = new BattleCharacter(battle, team2);
+    // 斧王3.id = "000002";
+    // 斧王3.name = "斧王3";
+    // 斧王3.hp = 2000;
+    // 斧王3.currHP = 2000;
+    // 斧王3.atk = 200;
+    // 斧王3.def = 50;
+    // 斧王3.spd = 80;
+    // 斧王3.critRate = 0.05;
+    // 斧王3.critDmg = 1.5;
+    // 斧王3.skills.push(this.generateSkill(斧王3));
 
-    const 斧王4 = new BattleCharacter(battle, team2);
-    斧王4.id = "000002";
-    斧王4.name = "斧王4";
-    斧王4.hp = 2500;
-    斧王4.currHP = 2500;
-    斧王4.atk = 250;
-    斧王4.def = 50;
-    斧王4.spd = 80;
-    斧王4.critRate = 0.05;
-    斧王4.critDmg = 1.5;
-    斧王4.skills.push(this.generateSkill(斧王4));
+    // const 斧王4 = new BattleCharacter(battle, team2);
+    // 斧王4.id = "000002";
+    // 斧王4.name = "斧王4";
+    // 斧王4.hp = 2500;
+    // 斧王4.currHP = 2500;
+    // 斧王4.atk = 250;
+    // 斧王4.def = 50;
+    // 斧王4.spd = 80;
+    // 斧王4.critRate = 0.05;
+    // 斧王4.critDmg = 1.5;
+    // 斧王4.skills.push(this.generateSkill(斧王4));
 
-    const 斧王5 = new BattleCharacter(battle, team2);
-    斧王5.id = "000002";
-    斧王5.name = "斧王5";
-    斧王5.hp = 3000;
-    斧王5.currHP = 3000;
-    斧王5.atk = 300;
-    斧王5.def = 50;
-    斧王5.spd = 80;
-    斧王5.critRate = 0.05;
-    斧王5.critDmg = 1.5;
-    斧王5.skills.push(this.generateSkill(斧王5));
+    // const 斧王5 = new BattleCharacter(battle, team2);
+    // 斧王5.id = "000002";
+    // 斧王5.name = "斧王5";
+    // 斧王5.hp = 3000;
+    // 斧王5.currHP = 3000;
+    // 斧王5.atk = 300;
+    // 斧王5.def = 50;
+    // 斧王5.spd = 80;
+    // 斧王5.critRate = 0.05;
+    // 斧王5.critDmg = 1.5;
+    // 斧王5.skills.push(this.generateSkill(斧王5));
+
+    const 斧王6 = new BattleCharacter(battle, team2);
+    斧王6.id = "000002";
+    斧王6.name = "斧王";
+    斧王6.hp = 10000;
+    斧王6.currHP = 10000;
+    斧王6.atk = 400;
+    斧王6.def = 50;
+    斧王6.spd = 80;
+    斧王6.critRate = 0.05;
+    斧王6.critDmg = 1.5;
+    斧王6.skills.push(this.generateSkill(斧王6));
+
+    battle.listen(BattleEventType.DAMAGED, async (data) => {
+      if (data.target !== 斧王6) {
+        return;
+      }
+
+      if (Math.random() < 0.17) {
+        for await (const obj of data.source.team
+          .filter(obj => obj.isAlive)) {
+          await obj.attacked(data.target, 0.3);
+        }
+      }
+    });
 
     team1.push(织田信长, 羽柴秀吉, 德川家康, 钟离, 雷电将军);
-    team2.push(斧王1, 斧王2, 斧王3, 斧王4, 斧王5);
+    // team2.push(斧王1, 斧王2, 斧王3, 斧王4, 斧王5);
+    team2.push(斧王6);
 
     battle.teams = [team1, team2];
-
-    // battle.listen(BattleEventType.SKILL_CAST, )
+    battle.battleActionManager = new DynamicBattleActionManager(battle, battle.teams);
 
     return battle;
   }
 
   static generateSkill(owner: IBattleObject, cast: SkillCast = SkillCasts.斩击.cast): IBattleSkill {
-    const skill = new BattleSkill("000001", "斩击", owner);
-    skill.cast = cast.bind(skill);
+    const skill = new BattleSkill("000001", "斩击", owner, cast);
     return skill;
   }
 
-  listen(eventType: BattleEventType.TURN_START, handler: (data: ITurnStartEventData) => Promise<void> | void): void;
-  listen(eventType: BattleEventType.TURN_END, handler: (data: ITurnEndEventData) => Promise<void> | void): void;
-  listen(eventType: BattleEventType.ACTION_START, handler: (data: IActionStartEventData) => Promise<void> | void): void;
-  listen(eventType: BattleEventType.ACTION_END, handler: (data: IActionEndEventData) => Promise<void> | void): void;
-  listen(eventType: BattleEventType.SKILL_CAST, handler: (data: ISkillCastEventData) => Promise<void> | void): void;
-  listen(eventType: BattleEventType.SKILL_CASTED, handler: (data: ISkillCastedEventData) => Promise<void> | void): void;
-  listen(eventType: BattleEventType.DAMAGE, handler: (data: IDamageEventData) => Promise<void> | void): void;
-  listen(eventType: BattleEventType.DAMAGED, handler: (data: IDamagedEventData) => Promise<void> | void): void;
-  listen(eventType: BattleEventType.HEAL, handler: (data: IHealEventData) => Promise<void> | void): void;
-  listen(eventType: BattleEventType.HEALED, handler: (data: IHealedEventData) => Promise<void> | void): void;
-  listen(eventType: BattleEventType, handler: (data: any) => Promise<void> | void) {
-    this.listeners.push({ eventType, handler });
+  listen(eventType: BattleEventType.TURN_START, handler: (data: ITurnStartEventData) => Promise<void> | void): EventID;
+  listen(eventType: BattleEventType.TURN_END, handler: (data: ITurnEndEventData) => Promise<void> | void): EventID;
+  listen(eventType: BattleEventType.ACTION_START, handler: (data: IActionStartEventData) => Promise<void> | void): EventID;
+  listen(eventType: BattleEventType.ACTION_END, handler: (data: IActionEndEventData) => Promise<void> | void): EventID;
+  listen(eventType: BattleEventType.SKILL_CAST, handler: (data: ISkillCastEventData) => Promise<void> | void): EventID;
+  listen(eventType: BattleEventType.SKILL_CASTED, handler: (data: ISkillCastedEventData) => Promise<void> | void): EventID;
+  listen(eventType: BattleEventType.DAMAGE, handler: (data: IDamageEventData) => Promise<void> | void): EventID;
+  listen(eventType: BattleEventType.DAMAGED, handler: (data: IDamagedEventData) => Promise<void> | void): EventID;
+  listen(eventType: BattleEventType.HEAL, handler: (data: IHealEventData) => Promise<void> | void): EventID;
+  listen(eventType: BattleEventType.HEALED, handler: (data: IHealedEventData) => Promise<void> | void): EventID;
+  listen(eventType: BattleEventType, handler: (data: any) => Promise<void> | void): EventID {
+    const eventID = crypto.randomUUID();
+    this.listeners.push({ eventType, handler, eventID });
+
+    return eventID;
   }
 
   removeListener(eventType: BattleEventType.TURN_START, handler: (data: ITurnStartEventData) => Promise<void> | void): void;

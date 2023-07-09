@@ -7,6 +7,7 @@ export interface IDamagedEventData extends IBattleEventData {
   source: IBattleObject;
   target: IBattleObject;
   damage: number;
+  shiledReducedDamage?: number;
   realDamage: number;
 }
 

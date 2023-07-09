@@ -1,3 +1,5 @@
+import { type BattleBuff } from "@core/Buff";
+
 import { type Battle, type BattleTeam } from "./Battle";
 import { BattleEventType, type IDamagedEventData, type IHealedEventData } from "./BattleEvent";
 import { type IBattleSkill } from "./IBattleSkill";
@@ -21,6 +23,7 @@ export interface IBattleObject {
 
   currHP: number;
   currMP: number;
+  buffs: BattleBuff[];
 
   isStunned: boolean;
   isSilenced: boolean;
@@ -64,6 +67,14 @@ export class IBattleObjectDefaultImplement {
     await this.battle.dispatch(BattleEventType.DAMAGED, data);
 
     this.currHP -= Math.min(data.realDamage, this.currHP);
+
+    if (this.currHP <= 0) {
+      // dispatch dead event
+      while (this.buffs.length) {
+        const buff = this.buffs.pop();
+        buff?.unmount();
+      }
+    }
   }
 
   static heal(this: IBattleObject, target: IBattleObject) {

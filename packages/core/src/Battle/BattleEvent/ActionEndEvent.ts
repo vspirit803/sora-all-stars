@@ -7,7 +7,7 @@ export interface IActionEndEventData extends IBattleEventData {
   target: IBattleObject;
 }
 
-export class ActionStartEvent extends BaseBattleEvent {
+export class ActionEndEvent extends BaseBattleEvent {
   constructor(data: IActionEndEventData) {
     super(BattleEventType.ACTION_END, data);
   }

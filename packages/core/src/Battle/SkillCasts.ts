@@ -1,3 +1,5 @@
+import { ShieldBuff } from "@core/Buff";
+
 import { BattleEventType, type IHealedEventData, type ISkillCastEventData } from "./BattleEvent";
 import { type IBattleObject } from "./IBattleObject";
 import { type GetSkillPriority, type GetSkillTarget, type IBattleSkill, type SkillCast } from "./IBattleSkill";
@@ -115,6 +117,29 @@ export const SkillCasts = {
     },
     getPriority: function (this: IBattleSkill) {
       return 2;
+    },
+  },
+  玉璋护盾: {
+    cast: async function (this: IBattleSkill, target: IBattleObject) {
+      const battle = this.owner.battle;
+      const buff = new ShieldBuff({
+        from: this.owner,
+        owner: target,
+        battle,
+      });
+
+      // eslint-disable-next-line @typescript-eslint/await-thenable
+      await buff.mount();
+    },
+    getPriority: function (this: IBattleSkill): number {
+      return 2;
+    },
+    getTarget: function (this: IBattleSkill) {
+      const members = this.owner.team.filter(each => each.isAlive);
+      // get the member with lowest hp
+      const target = members.reduce((prev, curr) => curr.currHP < prev.currHP ? curr : prev);
+
+      return target;
     },
   },
 } satisfies Record<string, ISkillScript>;
